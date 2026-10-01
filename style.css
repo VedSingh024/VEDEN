@@ -3778,3 +3778,15 @@ main {
     }
 
 }
+
+
+/* =========================================================
+   VEDEN — MOBILE SEARCH ZOOM FIX
+   Prevents iOS Safari from auto-zooming when the search field
+   receives focus. Kept isolated to the search input on mobile.
+   ========================================================= */
+@media screen and (max-width: 760px) {
+    .search-input {
+        font-size: 16px !important;
+    }
+}
