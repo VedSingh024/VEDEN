@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="VEDEN — Premium marketplace for groceries, electronics, fashion, home essentials and more."
+    >
+
+    <title>VEDEN — Everything You Need</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <!-- =====================================================
+         INDEX-ONLY HERO ARROW VISIBILITY
+         Keeps the existing CSS unchanged.
+    ====================================================== -->
+
+    <style>
+
+        .hero-slider .slider-arrow {
+            display: flex !important;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 20;
+
+            width: 26px;
+            height: 26px;
+
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid rgba(255,255,255,0.16);
+            border-radius: 50%;
+
+            background: rgba(8,8,8,0.72);
+            color: #ffffff;
+
+            font-size: 18px;
+            line-height: 1;
+
+            cursor: pointer;
+            user-select: none;
+
+            padding: 0;
+        }
+
+        .hero-slider .slider-prev {
+            left: 10px;
+        }
+
+        .hero-slider .slider-next {
+            right: 10px;
+        }
+
+        .hero-slider .slider-arrow:hover {
+            background: rgba(8,8,8,0.9);
+        }
+
+        .hero-slider .slider-arrow:focus-visible {
+            outline: 2px solid #d4b84c;
+            outline-offset: 2px;
+        }
+
+        /* Compact, clean banner indicator */
+        .hero-slider .slider-dots {
+            gap: 5px;
+            padding: 3px 6px;
+            border-radius: 50px;
+        }
+
+        .hero-slider .slider-dot {
+            width: 5px;
+            height: 5px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="site-header">
+
+    <div class="header-inner">
+
+
+        <!-- LOGO -->
+
+        <a
+            href="index.html"
+            class="brand-logo"
+            aria-label="VEDEN Home"
+        >
+            VEDEN
+        </a>
+
+
+        <!-- DELIVERY ADDRESS -->
+
+        <a
+            href="pages/address.html"
+            class="header-info veden-address-link"
+            aria-label="Manage delivery address"
+        >
+
+            <span>
+                Deliver to
+                <strong>your address</strong>
+            </span>
+
+        </a>
+
+
+        <!-- SEARCH -->
+
+        <form
+            class="search-form"
+            id="globalSearchForm"
+            role="search"
+        >
+
+            <input
+                type="search"
+                id="globalSearchInput"
+                class="search-input"
+                autocomplete="off"
+                aria-label="Search products"
+            >
+
+            <button
+                type="submit"
+                class="search-button"
+                aria-label="Search"
+            >
+                Search
+            </button>
+
+        </form>
+
+
+        <!-- LOGIN / CART -->
+
+        <nav
+            class="header-actions"
+            aria-label="Account navigation"
+        >
+
+            <a
+                href="pages/login.html"
+                class="header-login"
+                id="headerLogin"
+            >
+                Login
+            </a>
+
+            <a
+                href="pages/cart.html"
+                class="header-cart"
+            >
+                Cart
+
+                <span
+                    class="cart-badge"
+                    data-cart-count
+                >
+                    0
+                </span>
+
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main>
+
+
+<!-- =========================================================
+     HERO / 4 BANNER SLIDER
+========================================================= -->
+
+<section
+    class="hero-section"
+    aria-label="Featured products"
+>
+
+    <div
+        class="hero-slider"
+        id="heroSlider"
+    >
+
+
+        <!-- BANNER 1 -->
+
+        <article
+            class="hero-slide active"
+            aria-label="VEDEN Banner 1"
+        >
+
+            <img
+                src="banner 1.jpg"
+                alt="VEDEN featured banner 1"
+                class="hero-image"
+                draggable="false"
+            >
+
+        </article>
+
+
+        <!-- BANNER 2 -->
+
+        <article
+            class="hero-slide"
+            aria-label="VEDEN Banner 2"
+        >
+
+            <img
+                src="banner 2.jpg"
+                alt="VEDEN featured banner 2"
+                class="hero-image"
+                draggable="false"
+            >
+
+        </article>
+
+
+        <!-- BANNER 3 -->
+
+        <article
+            class="hero-slide"
+            aria-label="VEDEN Banner 3"
+        >
+
+            <img
+                src="banner 3.jpg"
+                alt="VEDEN featured banner 3"
+                class="hero-image"
+                draggable="false"
+            >
+
+        </article>
+
+
+        <!-- BANNER 4 -->
+
+        <article
+            class="hero-slide"
+            aria-label="VEDEN Banner 4"
+        >
+
+            <img
+                src="banner 4.jpg"
+                alt="VEDEN featured banner 4"
+                class="hero-image"
+                draggable="false"
+            >
+
+        </article>
+
+
+        <!-- PREVIOUS -->
+
+        <button
+            class="slider-arrow slider-prev"
+            id="sliderPrev"
+            type="button"
+            aria-label="Previous banner"
+        >
+            ‹
+        </button>
+
+
+        <!-- NEXT -->
+
+        <button
+            class="slider-arrow slider-next"
+            id="sliderNext"
+            type="button"
+            aria-label="Next banner"
+        >
+            ›
+        </button>
+
+
+        <!-- DOTS -->
+
+        <div
+            class="slider-dots"
+            id="sliderDots"
+            aria-label="Banner navigation"
+        >
+
+            <button
+                class="slider-dot active"
+                type="button"
+                data-slide="0"
+                aria-label="Go to banner 1"
+            ></button>
+
+            <button
+                class="slider-dot"
+                type="button"
+                data-slide="1"
+                aria-label="Go to banner 2"
+            ></button>
+
+            <button
+                class="slider-dot"
+                type="button"
+                data-slide="2"
+                aria-label="Go to banner 3"
+            ></button>
+
+            <button
+                class="slider-dot"
+                type="button"
+                data-slide="3"
+                aria-label="Go to banner 4"
+            ></button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     CATEGORIES
+========================================================= -->
+
+<section
+    class="store-section categories-section"
+    aria-label="Shop by category"
+>
+
+    <h2 class="category-title">
+        CATEGORY
+    </h2>
+
+    <div
+        class="category-grid"
+        id="categoryGrid"
+    >
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     BENEFITS
+========================================================= -->
+
+<section
+    class="store-section benefits-section"
+>
+
+    <div class="section-heading">
+
+        <div>
+
+            <span class="section-kicker">
+                THE VEDEN EXPERIENCE
+            </span>
+
+            <h2>
+                Shopping, simplified.
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <div class="benefits-grid">
+
+
+        <article class="benefit-card">
+
+            <div class="benefit-icon">
+                ◇
+            </div>
+
+            <h3>
+                Curated Selection
+            </h3>
+
+            <p>
+                Discover products across
+                everyday essentials and lifestyle categories.
+            </p>
+
+        </article>
+
+
+        <article class="benefit-card">
+
+            <div class="benefit-icon">
+                ✓
+            </div>
+
+            <h3>
+                Trusted Products
+            </h3>
+
+            <p>
+                Explore products with ratings,
+                reviews and detailed information.
+            </p>
+
+        </article>
+
+
+        <article class="benefit-card">
+
+            <div class="benefit-icon">
+                →
+            </div>
+
+            <h3>
+                Simple Checkout
+            </h3>
+
+            <p>
+                Add your favourites to the cart
+                and complete your order easily.
+            </p>
+
+        </article>
+
+
+        <article class="benefit-card">
+
+            <div class="benefit-icon">
+                ∞
+            </div>
+
+            <h3>
+                One Marketplace
+            </h3>
+
+            <p>
+                Grocery, technology, fashion,
+                home and much more in one place.
+            </p>
+
+        </article>
+
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="site-footer">
+
+    <div class="footer-main">
+
+
+        <!-- BRAND -->
+
+        <div class="footer-brand">
+
+            <a
+                href="index.html"
+                class="footer-logo"
+            >
+                VEDEN
+            </a>
+
+            <p>
+                Your modern marketplace
+                for everyday essentials,
+                technology and lifestyle.
+            </p>
+
+        </div>
+
+
+        <!-- SHOP -->
+
+        <div class="footer-column">
+
+            <h3>
+                Shop
+            </h3>
+
+            <a href="pages/products.html?category=grocery">
+                Grocery
+            </a>
+
+            <a href="pages/products.html?category=electronics">
+                Electronics
+            </a>
+
+            <a href="pages/products.html?category=fashion">
+                Fashion
+            </a>
+
+            <a href="pages/products.html?category=home-living">
+                Home &amp; Living
+            </a>
+
+        </div>
+
+
+        <!-- HELP -->
+
+        <div class="footer-column">
+
+            <h3>
+                Help
+            </h3>
+
+            <a href="pages/cart.html">
+                Cart
+            </a>
+
+            <a href="pages/checkout.html">
+                Checkout
+            </a>
+
+            <a href="pages/login.html">
+                Login
+            </a>
+
+            <a href="pages/signup.html">
+                Create Account
+            </a>
+
+        </div>
+
+
+        <!-- VEDEN -->
+
+        <div class="footer-column">
+
+            <h3>
+                VEDEN
+            </h3>
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="pages/products.html">
+                All Products
+            </a>
+
+            <a href="pages/cart.html">
+                My Cart
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <span>
+            © 2026 VEDEN. All rights reserved.
+        </span>
+
+        <span>
+            Built for a better way to shop.
+        </span>
+
+    </div>
+
+</footer>
+
+
+
+<!-- =========================================================
+     VEDEN DATA
+========================================================= -->
+
+<script src="script.js"></script>
+
+
+
+<!-- =========================================================
+     INDEX PAGE LOGIC
+========================================================= -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        /* =====================================================
+           HERO SLIDER
+           INITIALIZED INDEPENDENTLY OF VEDEN DATA
+        ===================================================== */
+
+        const slides =
+            document.querySelectorAll(
+                ".hero-slide"
+            );
+
+
+        const dots =
+            document.querySelectorAll(
+                ".slider-dot"
+            );
+
+
+        const prevButton =
+            document.getElementById(
+                "sliderPrev"
+            );
+
+
+        const nextButton =
+            document.getElementById(
+                "sliderNext"
+            );
+
+
+        let currentSlide = 0;
+
+        let sliderTimer = null;
+
+
+        /* =====================================================
+           SHOW SLIDE
+        ===================================================== */
+
+        function showSlide(index) {
+
+            if (!slides.length) {
+
+                return;
+
+            }
+
+
+            if (index < 0) {
+
+                index =
+                    slides.length - 1;
+
+            }
+
+
+            if (
+                index >=
+                slides.length
+            ) {
+
+                index = 0;
+
+            }
+
+
+            currentSlide = index;
+
+
+            slides.forEach(
+                function (slide) {
+
+                    slide.classList.remove(
+                        "active"
+                    );
+
+                }
+            );
+
+
+            dots.forEach(
+                function (dot) {
+
+                    dot.classList.remove(
+                        "active"
+                    );
+
+                }
+            );
+
+
+            const activeSlide =
+                slides[currentSlide];
+
+
+            if (activeSlide) {
+
+                activeSlide.classList.add(
+                    "active"
+                );
+
+            }
+
+
+            const activeDot =
+                dots[currentSlide];
+
+
+            if (activeDot) {
+
+                activeDot.classList.add(
+                    "active"
+                );
+
+            }
+
+        }
+
+
+        /* =====================================================
+           NEXT
+        ===================================================== */
+
+        function nextSlide() {
+
+            showSlide(
+                currentSlide + 1
+            );
+
+        }
+
+
+        /* =====================================================
+           PREVIOUS
+        ===================================================== */
+
+        function previousSlide() {
+
+            showSlide(
+                currentSlide - 1
+            );
+
+        }
+
+
+        /* =====================================================
+           AUTO SLIDER
+        ===================================================== */
+
+        function startSlider() {
+
+            if (sliderTimer) {
+
+                clearInterval(
+                    sliderTimer
+                );
+
+            }
+
+
+            sliderTimer =
+                setInterval(
+                    nextSlide,
+                    6000
+                );
+
+        }
+
+
+        /* =====================================================
+           NEXT BUTTON
+        ===================================================== */
+
+        if (nextButton) {
+
+            nextButton.addEventListener(
+                "click",
+                function () {
+
+                    nextSlide();
+
+                    startSlider();
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           PREVIOUS BUTTON
+        ===================================================== */
+
+        if (prevButton) {
+
+            prevButton.addEventListener(
+                "click",
+                function () {
+
+                    previousSlide();
+
+                    startSlider();
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           DOTS
+        ===================================================== */
+
+        dots.forEach(
+            function (dot) {
+
+                dot.addEventListener(
+                    "click",
+                    function () {
+
+                        const slideNumber =
+                            Number(
+                                dot.dataset.slide
+                            );
+
+
+                        showSlide(
+                            slideNumber
+                        );
+
+
+                        startSlider();
+
+                    }
+                );
+
+            }
+        );
+
+
+        /* =====================================================
+           START HERO IMMEDIATELY
+        ===================================================== */
+
+        if (slides.length) {
+
+            showSlide(0);
+
+            startSlider();
+
+        }
+
+
+
+        /* =====================================================
+           INITIALIZE VEDEN DATA
+           CATEGORY RENDER WAITS ONLY FOR VEDEN
+        ===================================================== */
+
+        function initializeIndexPage() {
+
+            if (!window.VEDEN) {
+
+                setTimeout(
+                    initializeIndexPage,
+                    50
+                );
+
+                return;
+
+            }
+
+
+            /* =================================================
+               CATEGORY GRID
+            ================================================= */
+
+            const categoryGrid =
+                document.getElementById(
+                    "categoryGrid"
+                );
+
+
+            if (
+                categoryGrid &&
+                Array.isArray(
+                    window.VEDEN.categories
+                )
+            ) {
+
+                categoryGrid.innerHTML = "";
+
+
+                /* =================================================
+                   TAKE CATEGORIES
+                   PET SUPPLIES → TOOLS
+                ================================================= */
+
+                let categories =
+                    window.VEDEN.categories
+                        .filter(
+                            function (category) {
+
+                                return (
+                                    category &&
+                                    category.id
+                                );
+
+                            }
+                        )
+                        .slice(
+                            0,
+                            30
+                        );
+
+
+                /* =================================================
+                   FIND PET SUPPLIES
+                ================================================= */
+
+                const petIndex =
+                    categories.findIndex(
+                        function (category) {
+
+                            const name =
+                                String(
+                                    category.name || ""
+                                )
+                                .trim()
+                                .toLowerCase();
+
+
+                            const id =
+                                String(
+                                    category.id || ""
+                                )
+                                .trim()
+                                .toLowerCase();
+
+
+                            return (
+                                name.includes("pet") ||
+                                id.includes("pet")
+                            );
+
+                        }
+                    );
+
+
+                /* =================================================
+                   REPLACE PET SUPPLIES WITH TOOLS
+                ================================================= */
+
+                if (petIndex !== -1) {
+
+                    categories[petIndex] = {
+
+                        id: "tools",
+
+                        name: "Tools",
+
+                        folder: "Tools"
+
+                    };
+
+                }
+
+
+                /* =================================================
+                   REMOVE DUPLICATE TOOLS
+                ================================================= */
+
+                let toolsIndex =
+                    categories.findIndex(
+                        function (category) {
+
+                            const name =
+                                String(
+                                    category.name || ""
+                                )
+                                .trim()
+                                .toLowerCase();
+
+
+                            const id =
+                                String(
+                                    category.id || ""
+                                )
+                                .trim()
+                                .toLowerCase();
+
+
+                            return (
+                                name === "tools" ||
+                                id === "tools"
+                            );
+
+                        }
+                    );
+
+
+                if (
+                    petIndex !== -1 &&
+                    toolsIndex !== -1 &&
+                    toolsIndex !== petIndex
+                ) {
+
+                    categories.splice(
+                        toolsIndex,
+                        1
+                    );
+
+                }
+
+
+                /* =================================================
+                   MAXIMUM 30
+                ================================================= */
+
+                categories =
+                    categories.slice(
+                        0,
+                        30
+                    );
+
+
+                /* =================================================
+                   RENDER CATEGORY CARDS
+                ================================================= */
+
+                categories.forEach(
+                    function (
+                        category,
+                        index
+                    ) {
+
+                        if (
+                            !category ||
+                            !category.id
+                        ) {
+
+                            return;
+
+                        }
+
+
+                        const card =
+                            document.createElement(
+                                "a"
+                            );
+
+
+                        card.className =
+                            "category-card";
+
+
+                        card.href =
+                            "pages/products.html?category=" +
+                            encodeURIComponent(
+                                category.id
+                            );
+
+
+                        /* =================================================
+                           CATEGORY NAME
+                        ================================================= */
+
+                        const categoryName =
+                            category.name ||
+                            "Category";
+
+
+                        /* =================================================
+                           FOLDER NAME
+                           TV IS EXPLICITLY TV
+                        ================================================= */
+
+                        let folderName =
+                            category.folder ||
+                            categoryName;
+
+
+                        const normalizedName =
+                            String(
+                                categoryName
+                            )
+                            .trim()
+                            .toLowerCase();
+
+
+                        const normalizedId =
+                            String(
+                                category.id
+                            )
+                            .trim()
+                            .toLowerCase();
+
+
+                        /*
+                         * IMPORTANT:
+                         * TV category images are stored inside
+                         *
+                         * TV/
+                         *
+                         * so force the exact folder name.
+                         */
+
+                        if (
+                            normalizedName === "tv" ||
+                            normalizedName === "television" ||
+                            normalizedName === "televisions" ||
+                            normalizedId === "tv" ||
+                            normalizedId === "television" ||
+                            normalizedId === "televisions"
+                        ) {
+
+                            folderName = "TV";
+
+                        }
+
+
+                        /* =================================================
+                           IMAGE NUMBER
+                        ================================================= */
+
+                        const CATEGORY_IMAGE_NUMBERS = {
+                            "grocery": 1,
+                            "fruits-vegetables": 2,
+                            "dairy-breakfast": 3,
+                            "snacks": 4,
+                            "beverages": 5,
+                            "bakery": 6,
+                            "personal-care": 7,
+                            "beauty": 8,
+                            "fashion": 9,
+                            "footwear": 10,
+                            "electronics": 11,
+                            "mobiles": 12,
+                            "laptops": 13,
+                            "tablets": 14,
+                            "tv": 15,
+                            "audio": 16,
+                            "cameras": 17,
+                            "home-appliances": 18,
+                            "kitchen": 19,
+                            "home-living": 20,
+                            "furniture": 21,
+                            "cleaning": 22,
+                            "stationery": 23,
+                            "books": 24,
+                            "toys": 25,
+                            "baby-care": 26,
+                            "tools": 27,
+                            "sports": 28,
+                            "automotive": 29,
+                            "travel": 30
+                        };
+
+                        const imageNumber =
+                            CATEGORY_IMAGE_NUMBERS[normalizedId] ||
+                            (index + 1);
+
+
+                        /* =================================================
+                           IMAGE CANDIDATES
+                        ================================================= */
+
+                        const imageCandidates = [];
+
+
+                        /* Explicit image */
+
+                        if (
+                            category.image
+                        ) {
+
+                            imageCandidates.push(
+                                category.image
+                            );
+
+                        }
+
+
+                        /* Image URL */
+
+                        if (
+                            category.imageUrl
+                        ) {
+
+                            imageCandidates.push(
+                                category.imageUrl
+                            );
+
+                        }
+
+
+                        /* Image path */
+
+                        if (
+                            category.imagePath
+                        ) {
+
+                            imageCandidates.push(
+                                category.imagePath
+                            );
+
+                        }
+
+
+                        /* =================================================
+                           FOLDER BASED IMAGE
+                        ================================================= */
+
+                        const categoryImageBasePath =
+                            window.location.pathname
+                                .replace(/\\/g, "/")
+                                .toLowerCase()
+                                .includes("/pages/")
+                                    ? "../"
+                                    : "";
+
+                        imageCandidates.push(
+                            encodeURI(
+                                categoryImageBasePath +
+                                folderName +
+                                "/cat" +
+                                imageNumber +
+                                ".jpg"
+                            )
+                        );
+
+
+                        /* =================================================
+                           ROOT FALLBACK
+                        ================================================= */
+
+                        imageCandidates.push(
+                            "cat" +
+                            imageNumber +
+                            ".jpg"
+                        );
+
+
+                        /* =================================================
+                           CATEGORY IMAGES FALLBACK
+                        ================================================= */
+
+                        imageCandidates.push(
+                            encodeURI(
+                                "Category images/cat" +
+                                imageNumber +
+                                ".jpg"
+                            )
+                        );
+
+
+                        imageCandidates.push(
+                            encodeURI(
+                                "category images/cat" +
+                                imageNumber +
+                                ".jpg"
+                            )
+                        );
+
+
+                        /* =================================================
+                           TOOLS FALLBACK
+                        ================================================= */
+
+                        if (
+                            normalizedId ===
+                            "tools"
+                        ) {
+
+                            imageCandidates.push(
+                                categoryImageBasePath +
+                                "Tools/cat" +
+                                imageNumber +
+                                ".jpg"
+                            );
+
+
+                            imageCandidates.push(
+                                categoryImageBasePath +
+                                "Tools/tools.jpg"
+                            );
+
+
+                            imageCandidates.push(
+                                "tools.jpg"
+                            );
+
+                        }
+
+
+                        /* =================================================
+                           TV FALLBACK
+                        ================================================= */
+
+                        if (
+                            normalizedName === "tv" ||
+                            normalizedName === "television" ||
+                            normalizedName === "televisions" ||
+                            normalizedId === "tv" ||
+                            normalizedId === "television" ||
+                            normalizedId === "televisions"
+                        ) {
+
+                            imageCandidates.push(
+                                categoryImageBasePath +
+                                "TV/cat" +
+                                imageNumber +
+                                ".jpg"
+                            );
+
+                        }
+
+
+                        /* =================================================
+                           REMOVE DUPLICATES
+                        ================================================= */
+
+                        const uniqueImages =
+                            [
+                                ...new Set(
+                                    imageCandidates
+                                )
+                            ];
+
+
+                        /* =================================================
+                           CATEGORY HTML
+                        ================================================= */
+
+                        card.innerHTML = `
+
+                            <div class="category-image">
+
+                                <img
+                                    src="${uniqueImages[0] || ""}"
+                                    alt="${categoryName}"
+                                    loading="lazy"
+                                    decoding="async"
+                                >
+
+                            </div>
+
+                            <h3>
+                                ${categoryName}
+                            </h3>
+
+                        `;
+
+
+                        /* =================================================
+                           IMAGE FALLBACK SYSTEM
+                        ================================================= */
+
+                        const image =
+                            card.querySelector(
+                                ".category-image img"
+                            );
+
+
+                        if (image) {
+
+                            let imageIndex = 0;
+
+
+                            image.addEventListener(
+                                "error",
+                                function () {
+
+                                    imageIndex++;
+
+
+                                    if (
+                                        imageIndex <
+                                        uniqueImages.length
+                                    ) {
+
+                                        image.src =
+                                            uniqueImages[
+                                                imageIndex
+                                            ];
+
+                                    } else {
+
+                                        image.style.display =
+                                            "none";
+
+                                    }
+
+                                }
+                            );
+
+                        }
+
+
+                        categoryGrid.appendChild(
+                            card
+                        );
+
+                    }
+                );
+
+            }
+
+
+
+            /* =================================================
+               GLOBAL SEARCH
+            ================================================= */
+
+            const searchForm =
+                document.getElementById(
+                    "globalSearchForm"
+                );
+
+
+            const searchInput =
+                document.getElementById(
+                    "globalSearchInput"
+                );
+
+
+            if (
+                searchForm &&
+                searchInput
+            ) {
+
+                searchForm.addEventListener(
+                    "submit",
+                    function (event) {
+
+                        event.preventDefault();
+
+
+                        const query =
+                            searchInput.value.trim();
+
+
+                        if (!query) {
+
+                            searchInput.focus();
+
+                            return;
+
+                        }
+
+
+                        if (
+                            typeof window.VEDEN
+                                .openSearch ===
+                            "function"
+                        ) {
+
+                            window.VEDEN.openSearch(
+                                query
+                            );
+
+                        } else {
+
+                            window.location.href =
+                                "pages/products.html?search=" +
+                                encodeURIComponent(
+                                    query
+                                );
+
+                        }
+
+                    }
+                );
+
+            }
+
+        }
+
+
+        /* =====================================================
+           RUN CATEGORY INITIALIZATION
+        ===================================================== */
+
+        initializeIndexPage();
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>
