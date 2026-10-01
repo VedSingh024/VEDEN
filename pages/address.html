@@ -1,0 +1,1880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+    <title>Address | VEDEN</title>
+
+    <link
+        rel="stylesheet"
+        href="../style.css"
+    >
+
+    <style>
+        /* =========================================================
+           VEDEN — ADDRESS PAGE
+           Same visual language as the checkout page.
+           Standalone address management only.
+        ========================================================= */
+
+        *{
+            box-sizing:border-box;
+        }
+
+        html,
+        body{
+            margin:0;
+            padding:0;
+            min-height:100%;
+            background:#0b0b0b;
+            color:#fff;
+        }
+
+        body{
+            min-height:100vh;
+            display:flex;
+            flex-direction:column;
+            font-family:Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+
+        .address-page{
+            width:100%;
+            flex:1 0 auto;
+            padding:24px 16px 28px;
+        }
+
+        /* Login gate — shown only for logged-out visitors. */
+        .address-login-required{
+            width:100%;
+            min-height:38px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding:8px 12px;
+            border:1px solid rgba(255,255,255,.10);
+            border-radius:8px;
+            background:linear-gradient(135deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
+            box-shadow:inset 0 1px 0 rgba(255,255,255,.025);
+            backdrop-filter:blur(18px);
+            -webkit-backdrop-filter:blur(18px);
+            color:rgba(255,255,255,.72);
+            font-size:9px;
+            line-height:12px;
+            font-weight:500;
+            text-align:center;
+            letter-spacing:.01em;
+        }
+
+        .address-login-required[hidden]{
+            display:none;
+        }
+
+
+        .address-shell{
+            width:100%;
+            max-width:none;
+            margin:0 auto;
+        }
+
+        .address-card{
+            width:100%;
+            padding:18px;
+            border:1px solid rgba(255,255,255,.09);
+            border-radius:12px;
+            background:rgba(15,15,15,.72);
+            box-shadow:
+                0 16px 38px rgba(0,0,0,.16),
+                inset 0 1px 0 rgba(255,255,255,.025);
+            backdrop-filter:blur(18px);
+            -webkit-backdrop-filter:blur(18px);
+        }
+
+        .address-card-header{
+            margin:0 0 13px;
+            text-align:center;
+        }
+
+        .address-card-header h1{
+            margin:0;
+            color:rgba(255,255,255,.90);
+            font-size:13px;
+            line-height:16px;
+            letter-spacing:.015em;
+        }
+
+        .address-card-header p{
+            margin:3px 0 0;
+            color:rgba(255,255,255,.40);
+            font-size:8px;
+            line-height:12px;
+        }
+
+        .address-grid{
+            display:grid;
+            grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+            column-gap:14px;
+            row-gap:9px;
+            align-items:start;
+        }
+
+        .address-name-field{
+            grid-column:1 / -1;
+        }
+
+        .address-field{
+            min-width:0;
+            display:flex;
+            flex-direction:column;
+            gap:4px;
+        }
+
+        .address-field > label,
+        .address-type-block > label{
+            margin:0;
+            color:rgba(255,255,255,.58);
+            font-size:8px;
+            line-height:12px;
+            font-weight:600;
+            letter-spacing:.035em;
+        }
+
+        .address-input,
+        .address-select{
+            width:100%;
+            height:36px;
+            min-height:36px;
+            border:1px solid rgba(255,255,255,.12);
+            border-radius:8px;
+            outline:none;
+            background:rgba(255,255,255,.025);
+            color:rgba(255,255,255,.82);
+            font:inherit;
+            font-size:9px;
+            line-height:18px;
+            padding:8px 10px;
+            transition:
+                border-color .18s ease,
+                background-color .18s ease,
+                box-shadow .18s ease;
+        }
+
+        .address-input::placeholder{
+            color:rgba(255,255,255,.34);
+        }
+
+        .address-input:focus,
+        .address-select:focus{
+            background:rgba(255,255,255,.035);
+            border-color:rgba(255,255,255,.20);
+            box-shadow:
+                0 0 0 2px rgba(255,255,255,.025),
+                0 6px 18px rgba(0,0,0,.10);
+        }
+
+        .address-select{
+            color-scheme:dark;
+        }
+
+        .address-select option{
+            background:#171717;
+            color:#eee;
+        }
+
+        .address-type-block{
+            min-width:0;
+            display:flex;
+            flex-direction:column;
+            gap:4px;
+        }
+
+        .address-type-box{
+            width:100%;
+            min-height:36px;
+            height:36px;
+            padding:0 10px;
+            display:flex;
+            flex-direction:row;
+            justify-content:space-between;
+            align-items:center;
+            gap:8px;
+            border:1px solid rgba(255,255,255,.11);
+            border-radius:8px;
+            background:rgba(255,255,255,.025);
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,.035),
+                0 5px 16px rgba(0,0,0,.08);
+        }
+
+        .address-type-option{
+            display:flex;
+            align-items:center;
+            justify-content:flex-start;
+            gap:5px;
+            width:auto;
+            height:18px;
+            min-height:18px;
+            margin:0;
+            padding:0;
+            color:rgba(255,255,255,.72);
+            font-size:8px;
+            line-height:18px;
+            cursor:pointer;
+        }
+
+        .address-type-option input{
+            width:10px;
+            height:10px;
+            min-width:10px;
+            min-height:10px;
+            margin:0;
+            accent-color:#fff;
+        }
+
+        .address-save-row{
+            grid-column:1 / -1;
+            min-height:0;
+            display:flex;
+            align-items:center;
+            justify-content:stretch;
+            padding:0;
+            margin-top:12px;
+        }
+
+        .address-save-button{
+            width:100%;
+            min-width:0;
+            height:28px;
+            padding:0 12px;
+            border:1px solid rgba(255,255,255,.14);
+            border-radius:8px;
+            background:rgba(255,255,255,.055);
+            color:rgba(255,255,255,.86);
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,.045),
+                0 7px 20px rgba(0,0,0,.14);
+            backdrop-filter:blur(14px);
+            -webkit-backdrop-filter:blur(14px);
+            font:inherit;
+            font-size:8px;
+            font-weight:700;
+            line-height:1;
+            cursor:pointer;
+            transition:
+                background-color .18s ease,
+                border-color .18s ease,
+                transform .18s ease;
+        }
+
+        .address-save-button:hover{
+            background:rgba(255,255,255,.08);
+            border-color:rgba(255,255,255,.22);
+        }
+
+        .address-save-button:active{
+            transform:translateY(1px);
+        }
+
+        .saved-address-card{
+            width:100%;
+            margin:0 0 2px;
+            padding:16px;
+            border:1px solid rgba(255,255,255,.13);
+            border-radius:10px;
+            background:linear-gradient(135deg,rgba(255,255,255,.065),rgba(255,255,255,.018));
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,.045),
+                0 12px 28px rgba(0,0,0,.16);
+            backdrop-filter:blur(18px);
+            -webkit-backdrop-filter:blur(18px);
+        }
+
+        .saved-address-top{
+            display:flex;
+            align-items:flex-start;
+            justify-content:space-between;
+            gap:14px;
+            padding-bottom:12px;
+            border-bottom:1px solid rgba(255,255,255,.08);
+        }
+
+        .saved-address-label{
+            display:block;
+            margin-bottom:4px;
+            color:rgba(255,255,255,.38);
+            font-size:7px;
+            line-height:10px;
+            font-weight:700;
+            letter-spacing:.12em;
+        }
+
+        .saved-address-top h2{
+            margin:0;
+            color:rgba(255,255,255,.92);
+            font-size:12px;
+            line-height:15px;
+            font-weight:700;
+        }
+
+        .saved-address-type{
+            flex:0 0 auto;
+            padding:5px 9px;
+            border:1px solid rgba(255,255,255,.12);
+            border-radius:6px;
+            background:rgba(255,255,255,.035);
+            color:rgba(255,255,255,.68);
+            font-size:7px;
+            line-height:10px;
+            font-weight:700;
+            letter-spacing:.06em;
+        }
+
+        .saved-address-grid{
+            width:100%;
+            display:grid;
+            grid-template-columns:repeat(2,minmax(0,1fr));
+            gap:9px 14px;
+            padding-top:0;
+            max-width:58%;
+            margin-left:auto;
+        }
+
+        /* Desktop only: move only the left detail column to the left edge.
+           The right detail column stays at its existing right-side position. */
+        @media (min-width:901px){
+            .saved-address-grid{
+                max-width:none;
+                margin-left:0;
+                grid-template-columns:29% 29%;
+                justify-content:space-between;
+            }
+        }
+
+        .saved-address-detail{
+            min-width:0;
+            display:flex;
+            flex-direction:column;
+            gap:4px;
+        }
+
+        .saved-address-detail span{
+            color:rgba(255,255,255,.38);
+            font-size:7px;
+            line-height:10px;
+            font-weight:600;
+        }
+
+        .saved-address-detail strong{
+            min-width:0;
+            overflow-wrap:anywhere;
+            color:rgba(255,255,255,.78);
+            font-size:8px;
+            line-height:12px;
+            font-weight:500;
+        }
+
+        .address-error{
+            display:none;
+            margin:0;
+            color:#d88;
+            font-size:7px;
+            line-height:10px;
+        }
+
+        .address-field.invalid .address-input,
+        .address-field.invalid .address-select{
+            border-color:rgba(220,100,100,.55);
+        }
+
+        .address-field.invalid .address-error{
+            display:block;
+        }
+
+        .address-actions{
+            display:flex;
+            align-items:center;
+            justify-content:stretch;
+            gap:10px;
+            margin-top:14px;
+        }
+
+        .address-action{
+            min-width:0;
+            flex:1 1 0;
+            height:34px;
+            padding:0 15px;
+            border:1px solid rgba(255,255,255,.12);
+            border-radius:8px;
+            background:rgba(255,255,255,.045);
+            color:rgba(255,255,255,.84);
+            font:inherit;
+            font-size:8px;
+            cursor:pointer;
+            transition:
+                background-color .18s ease,
+                border-color .18s ease,
+                transform .18s ease;
+        }
+
+        .address-action:hover{
+            background:rgba(255,255,255,.07);
+            border-color:rgba(255,255,255,.20);
+        }
+
+        .address-action:active{
+            transform:translateY(1px);
+        }
+
+        .address-action.primary{
+            background:rgba(255,255,255,.09);
+            color:#fff;
+        }
+
+        /* Only one saved address can be edited at a time. */
+        .address-action[data-action="edit"]:disabled{
+            opacity:.38;
+            cursor:not-allowed;
+            pointer-events:none;
+        }
+
+        .address-status{
+            min-height:0;
+            margin:5px 0 0;
+            text-align:left;
+            color:rgba(255,255,255,.45);
+            font-size:8px;
+            line-height:12px;
+        }
+
+        .address-page{
+            flex:1 0 auto;
+        }
+
+        .site-footer{
+            margin-top:auto !important;
+            flex:0 0 auto;
+        }
+
+        .saved-address-list{
+            width:100%;
+            display:flex;
+            flex-direction:column;
+            gap:12px;
+        }
+
+        .saved-address-list:empty{
+            display:none;
+        }
+
+        .saved-address-list .saved-address-card{
+            margin:0;
+        }
+
+        .saved-address-card.is-current{
+            border-color:rgba(255,255,255,.28);
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,.06),
+                0 14px 32px rgba(0,0,0,.20),
+                0 0 0 1px rgba(255,255,255,.035);
+        }
+
+        .saved-address-current-badge{
+            display:inline-flex;
+            align-items:center;
+            gap:5px;
+            margin-left:7px;
+            color:rgba(255,255,255,.82);
+            font-size:7px;
+            line-height:10px;
+            font-weight:700;
+        }
+
+        .saved-address-current-badge .tick{
+            width:14px;
+            height:14px;
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            border:1px solid rgba(255,255,255,.28);
+            border-radius:50%;
+            background:rgba(255,255,255,.09);
+            box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
+            font-size:9px;
+        }
+
+        .saved-address-card[hidden]{
+            display:none !important;
+        }
+
+        @media (max-width:900px){
+            .saved-address-grid{
+                grid-template-columns:repeat(2,minmax(0,1fr));
+            }
+        }
+
+        @media (max-width:620px){
+            .address-page{
+                padding:18px 12px 34px;
+            }
+
+            .address-shell{
+                width:100%;
+            }
+
+            .address-card{
+                padding:14px;
+                border-radius:10px;
+            }
+
+            .address-card-header{
+                margin-bottom:11px;
+            }
+
+            .address-card-header h1{
+                font-size:12px;
+            }
+
+            .address-card-header p{
+                font-size:7px;
+            }
+
+            .address-grid{
+                grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+                column-gap:9px;
+                row-gap:8px;
+            }
+
+            .address-field > label,
+            .address-type-block > label{
+                font-size:7px;
+                line-height:11px;
+            }
+
+            .address-field{
+                gap:3px;
+            }
+
+            .address-input,
+            .address-select{
+                height:34px;
+                min-height:34px;
+                padding:7px 8px;
+                font-size:8px;
+                border-radius:7px;
+            }
+
+            .address-type-box{
+                min-height:34px;
+                height:34px;
+                padding:0 7px;
+                gap:5px;
+                border-radius:7px;
+            }
+
+            .address-type-option{
+                height:17px;
+                min-height:17px;
+                font-size:7px;
+                line-height:17px;
+            }
+
+            .address-type-option input{
+                width:9px;
+                height:9px;
+                min-width:9px;
+                min-height:9px;
+            }
+
+            .address-save-row{
+                min-height:0;
+                margin-top:12px;
+            }
+
+            .address-save-button{
+                width:100%;
+                min-width:0;
+                height:28px;
+                padding:0 11px;
+                font-size:7px;
+            }
+
+            .address-actions{
+                margin-top:11px;
+                gap:7px;
+            }
+
+            .address-action{
+                min-width:0;
+                flex:1 1 0;
+                height:32px;
+                padding:0 9px;
+                font-size:7px;
+            }
+        }
+
+        @media (max-width:620px){
+            .saved-address-card{
+                padding:13px;
+                border-radius:9px;
+            }
+
+            .saved-address-top{
+                padding-bottom:10px;
+            }
+
+            .saved-address-grid{
+                max-width:none;
+                margin-left:0;
+                gap:8px 10px;
+                padding-top:10px;
+            }
+
+            .saved-address-label,
+            .saved-address-detail span{
+                font-size:6.5px;
+            }
+
+            .saved-address-top h2{
+                font-size:11px;
+            }
+
+            .saved-address-detail strong{
+                font-size:7.5px;
+            }
+        }
+
+        @media (max-width:380px){
+            .address-page{
+                padding:14px 9px 28px;
+            }
+
+            .address-card{
+                padding:11px;
+            }
+
+            .address-grid{
+                column-gap:7px;
+                row-gap:7px;
+            }
+
+            .address-input,
+            .address-select{
+                font-size:7.5px;
+            }
+
+            .address-field > label,
+            .address-type-block > label{
+                font-size:6.5px;
+            }
+        }
+
+        /* =========================================================
+           SAVED ADDRESS EDIT MODAL
+        ========================================================= */
+        .add-new-address-button{
+            display:none;
+            margin:12px 0 0 auto;
+            height:32px;
+            padding:0 18px;
+            border:1px solid rgba(255,255,255,.16);
+            border-radius:9px;
+            background:rgba(255,255,255,.055);
+            color:rgba(255,255,255,.86);
+            font:inherit;
+            font-size:8px;
+            font-weight:700;
+            cursor:pointer;
+            transition:background .18s ease,border-color .18s ease,transform .18s ease;
+        }
+        .add-new-address-button:hover{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.25);}
+        .add-new-address-button:active{transform:translateY(1px);}
+
+        .address-modal-backdrop{
+            position:fixed;
+            inset:0;
+            z-index:1000;
+            display:none;
+            align-items:center;
+            justify-content:center;
+            padding:18px;
+            background:rgba(0,0,0,.72);
+            backdrop-filter:blur(10px);
+            -webkit-backdrop-filter:blur(10px);
+        }
+        body.address-modal-open .address-modal-backdrop{display:flex;}
+        body.address-modal-open{overflow:hidden;}
+        body.address-modal-open #addressForm{
+            position:fixed;
+            top:50%;
+            left:50%;
+            transform:translate(-50%,-50%);
+            z-index:1001;
+            width:min(100%,760px);
+            max-height:calc(100vh - 36px);
+            overflow-y:auto;
+            margin:0;
+            padding:22px;
+            border:1px solid rgba(255,255,255,.16);
+            border-radius:16px;
+            background:linear-gradient(145deg,rgba(24,24,24,.98),rgba(10,10,10,.98));
+            box-shadow:0 28px 90px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.05);
+        }
+        body.address-modal-open #addressForm::-webkit-scrollbar{width:0;height:0;}
+        .address-modal-heading{
+            display:flex;align-items:center;justify-content:flex-end;
+            min-height:0;
+            margin:0 0 8px;
+        }
+        .address-modal-heading > span{display:none;}
+        .address-modal-close{
+            width:30px;height:30px;flex:0 0 30px;border:1px solid rgba(255,255,255,.14);
+            border-radius:50%;background:rgba(255,255,255,.05);color:#fff;cursor:pointer;font-size:18px;line-height:1;
+        }
+        body.address-modal-open #addressForm .address-save-row{margin-top:10px;}
+        body.address-modal-open #addressForm .address-save-button{width:100%;height:30px;min-width:0;padding:0 13px;font-size:8px;}
+        body.address-modal-open #addressForm .address-grid{row-gap:8px;}
+        .address-modal-cancel{margin-left:8px;}
+        @media(max-width:620px){
+            body.address-modal-open #addressForm{padding:16px;max-height:calc(100vh - 24px);}
+        }
+    </style>
+
+
+<style id="veden-final-address-width-fix">
+/* Keep the Address page outer card truly full-width on every device. */
+.address-page,
+.address-shell,
+.address-card{
+    width:100%!important;
+    max-width:none!important;
+    box-sizing:border-box!important;
+}
+
+@media(max-width:620px){
+    .address-page{width:100%!important;}
+    .address-shell,.address-card{width:100%!important;max-width:none!important;}
+}
+</style>
+
+
+<style id="veden-address-layout-final">
+/* =========================================================
+   VEDEN ADDRESS — FINAL INLINE FORM / ALIGNMENT POLISH
+   Only layout/position behavior is changed.
+   ========================================================= */
+.address-shell{
+    width:100%;
+    max-width:none;
+    margin:0 auto;
+}
+
+.address-card{
+    width:100%;
+    max-width:none;
+    overflow:visible;
+}
+
+.saved-address-list{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.saved-address-card{
+    width:100%;
+    max-width:none;
+    margin:0;
+    flex:0 0 auto;
+}
+
+/* The add button is deliberately outside the large outer address box. */
+.add-new-address-button{
+    display:none;
+    width:auto;
+    min-width:148px;
+    height:32px;
+    margin:8px 0 0 auto;
+    padding:0 16px;
+    box-sizing:border-box;
+}
+
+/* Form becomes a normal full-width address card in the exact stack position. */
+#addressForm{
+    width:100%;
+    max-width:none;
+    box-sizing:border-box;
+    margin:0;
+    flex:0 0 auto;
+    padding:18px;
+    border:1px solid rgba(255,255,255,.13);
+    border-radius:10px;
+    background:linear-gradient(135deg,rgba(255,255,255,.065),rgba(255,255,255,.018));
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 12px 28px rgba(0,0,0,.16);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+}
+
+/* When active, no fixed positioning is used, so there is no vertical shift. */
+body.address-modal-open{
+    overflow:auto;
+}
+body.address-modal-open .address-modal-backdrop{
+    display:none;
+}
+
+.address-card > #addressForm{
+    position:static;
+    transform:none;
+    z-index:auto;
+}
+
+#addressForm[hidden]{
+    display:none!important;
+}
+
+#addressForm .address-grid{
+    width:100%;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    column-gap:14px;
+    row-gap:9px;
+}
+
+#addressForm .address-name-field,
+#addressForm .address-save-row{
+    grid-column:1 / -1;
+}
+
+#addressForm .address-save-row{
+    width:100%;
+    margin-top:10px;
+}
+
+#addressForm .address-save-button{
+    width:100%;
+    min-width:0;
+    height:30px;
+}
+
+/* JS temporarily moves the form before the edited/saved card. */
+.saved-address-list .address-form-placeholder{
+    display:none;
+}
+
+@media(max-width:700px){
+    .add-new-address-button{
+        width:100%;
+        min-width:0;
+        margin-top:8px;
+    }
+
+    #addressForm{
+        padding:14px;
+    }
+
+    #addressForm .address-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        column-gap:9px;
+        row-gap:8px;
+    }
+}
+
+@media(max-width:420px){
+    #addressForm{
+        padding:12px;
+    }
+
+    #addressForm .address-grid{
+        column-gap:7px;
+        row-gap:7px;
+    }
+}
+</style>
+
+
+<style id="veden-address-interaction-final">
+/* =========================================================
+   VEDEN ADDRESS — FINAL INTERACTION / POSITION POLISH
+   Form + saved-card stacking stays inside the same address flow.
+   The Add New Address control never disappears while addresses exist.
+   ========================================================= */
+.address-shell{
+    width:100%!important;
+    max-width:none!important;
+}
+
+.address-card{
+    width:100%!important;
+    max-width:none!important;
+    overflow:visible!important;
+}
+
+.saved-address-list{
+    width:100%!important;
+    display:flex!important;
+    flex-direction:column!important;
+    gap:12px!important;
+}
+
+.saved-address-card{
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    box-sizing:border-box!important;
+}
+
+/* Add button stays outside the main Delivery Address card and remains
+   in the same structural position after the saved-address stack. */
+.add-new-address-button{
+    display:none;
+    width:100%!important;
+    min-width:0!important;
+    max-width:none!important;
+    height:34px!important;
+    margin:10px 0 0!important;
+    padding:0 16px!important;
+    box-sizing:border-box!important;
+    text-align:center;
+}
+
+/* The address form is a separate full-width box in normal document flow. */
+#addressForm{
+    width:100%!important;
+    max-width:none!important;
+    box-sizing:border-box!important;
+    margin:0!important;
+    flex:0 0 auto;
+}
+
+#addressForm.address-form-active{
+    display:block!important;
+}
+
+/* Never use the old fixed modal positioning. */
+body.address-modal-open{
+    overflow:auto!important;
+}
+body.address-modal-open .address-modal-backdrop{
+    display:none!important;
+}
+
+.address-card > #addressForm{
+    position:static!important;
+    top:auto!important;
+    left:auto!important;
+    transform:none!important;
+    z-index:auto!important;
+}
+
+#addressForm[hidden]{
+    display:none!important;
+}
+
+/* Edit = replace the selected saved card at exactly its position.
+   Add = form is placed before the saved-address stack, leaving the
+   already-saved address directly underneath it. */
+.saved-address-list > #addressForm{
+    order:0;
+}
+
+.saved-address-list > .saved-address-card{
+    order:1;
+}
+
+/* Keep the complete form width consistent on desktop and small screens. */
+#addressForm .address-grid,
+#addressForm .address-save-row,
+#addressForm .address-status{
+    width:100%;
+    box-sizing:border-box;
+}
+
+@media(max-width:700px){
+    .add-new-address-button{
+        width:100%!important;
+        margin-top:9px!important;
+    }
+}
+</style>
+
+
+
+<style id="veden-address-final-structure-fix">
+/* =========================================================
+   VEDEN ADDRESS — FINAL STRUCTURE
+   Add form = separate box above saved addresses.
+   Add button = fixed below the Delivery Address section.
+   ========================================================= */
+.address-shell{
+    width:100%!important;
+    max-width:none!important;
+    box-sizing:border-box!important;
+}
+
+.new-address-panel{
+    width:100%!important;
+    max-width:none!important;
+    box-sizing:border-box!important;
+    margin:0 0 12px!important;
+    padding:0!important;
+}
+
+.new-address-panel[hidden]{display:none!important;}
+
+.address-form-heading{
+    width:100%;
+    box-sizing:border-box;
+    margin:0 0 12px;
+    padding:0;
+    text-align:center;
+}
+
+.address-form-heading h2{
+    margin:0;
+    font-size:12px;
+    line-height:1.2;
+    font-weight:800;
+    color:rgba(255,255,255,.94);
+}
+
+.new-address-panel #addressForm{
+    width:100%!important;
+    max-width:none!important;
+    box-sizing:border-box!important;
+    margin:0!important;
+    position:static!important;
+    transform:none!important;
+    display:block!important;
+}
+
+.address-card{
+    width:100%!important;
+    max-width:none!important;
+    box-sizing:border-box!important;
+    overflow:visible!important;
+}
+
+.saved-address-list{
+    width:100%!important;
+    box-sizing:border-box!important;
+}
+
+/* The Add New Address control never moves or becomes part of a box. */
+.address-shell > .add-new-address-button{
+    display:none;
+    width:100%!important;
+    max-width:none!important;
+    min-width:0!important;
+    height:34px!important;
+    margin:10px 0 0!important;
+    padding:0 16px!important;
+    box-sizing:border-box!important;
+}
+
+/* While editing, the form temporarily replaces the selected card. */
+.saved-address-list > #addressForm{
+    width:100%!important;
+    max-width:none!important;
+    box-sizing:border-box!important;
+    margin:0!important;
+    position:static!important;
+    transform:none!important;
+}
+
+.saved-address-list > .saved-address-card[hidden]{
+    display:none!important;
+}
+
+/* When there are no saved addresses, the empty saved-address section must
+   not leave behind a second standalone "Delivery Address" box. */
+#savedAddressSection.is-empty{
+    display:none!important;
+}
+
+/* The heading belongs to the form box itself, not outside it. */
+#addressForm .address-form-heading{
+    display:block!important;
+}
+
+@media(max-width:700px){
+    .new-address-panel{margin-bottom:10px!important;}
+    .address-form-heading{margin-bottom:9px;}
+    .address-form-heading h2{font-size:11px;}
+    .address-shell > .add-new-address-button{width:100%!important;}
+}
+</style>
+
+</head>
+
+<body>
+
+<header class="site-header">
+    <div class="header-inner">
+
+        <a
+            href="../index.html"
+            class="brand-logo"
+        >
+            VEDEN
+        </a>
+
+        <a
+            href="address.html"
+            class="header-info veden-address-link"
+            aria-label="Manage delivery address"
+        >
+            <span class="address-label">Address</span>
+            <strong id="headerAddressText">your address</strong>
+        </a>
+
+        <form
+            class="search-form"
+            id="addressSearchForm"
+        >
+            <input
+                type="search"
+                id="addressSearchInput"
+                class="search-input"
+                placeholder="Search products, brands..."
+                autocomplete="off"
+            >
+            <button
+                type="submit"
+                class="search-button"
+            >
+                Search
+            </button>
+        </form>
+
+        <nav class="header-actions">
+            <a
+                href="login.html"
+                class="header-login"
+            >
+                Login
+            </a>
+
+            <a
+                href="cart.html"
+                class="header-cart"
+            >
+                Cart
+                <span
+                    class="cart-badge"
+                    data-cart-count
+                >
+                    0
+                </span>
+            </a>
+        </nav>
+
+    </div>
+</header>
+
+<main class="address-page">
+    <div
+        class="address-login-required"
+        id="addressLoginRequired"
+        hidden
+        role="status"
+        aria-live="polite"
+    >
+        Login required to continue.
+    </div>
+
+    <div class="address-shell" id="addressProtectedContent">
+
+        <section class="new-address-panel" id="newAddressPanel" hidden>
+            <form id="addressForm" novalidate>
+                <div class="address-form-heading">
+                    <h2 id="addressFormHeading">New Delivery Address</h2>
+                </div>
+                <div class="address-grid">
+
+                    <div class="address-field address-name-field">
+                        <label for="addressName">Name</label>
+                        <input
+                            class="address-input"
+                            id="addressName"
+                            name="fullName"
+                            type="text"
+                            autocomplete="name"
+                            placeholder="Enter your full name"
+                        >
+                        <span class="address-error">Enter your name.</span>
+                    </div>
+
+                    <div class="address-field">
+                        <label for="addressPhone">Mobile No.</label>
+                        <input
+                            class="address-input"
+                            id="addressPhone"
+                            name="phone"
+                            type="tel"
+                            inputmode="numeric"
+                            maxlength="10"
+                            autocomplete="tel"
+                            placeholder="10 digit mobile"
+                        >
+                        <span class="address-error">Enter a valid 10 digit mobile number.</span>
+                    </div>
+
+                    <div class="address-field">
+                        <label for="addressEmail">Email Address</label>
+                        <input
+                            class="address-input"
+                            id="addressEmail"
+                            name="email"
+                            type="email"
+                            autocomplete="email"
+                            placeholder="you@example.com"
+                        >
+                        <span class="address-error">Enter a valid email address.</span>
+                    </div>
+
+                    <div class="address-field">
+                        <label for="addressCity">City</label>
+                        <input
+                            class="address-input"
+                            id="addressCity"
+                            name="city"
+                            type="text"
+                            autocomplete="address-level2"
+                            placeholder="City"
+                        >
+                        <span class="address-error">Enter your city.</span>
+                    </div>
+
+                    <div class="address-field">
+                        <label for="addressPincode">PIN Code</label>
+                        <input
+                            class="address-input"
+                            id="addressPincode"
+                            name="pincode"
+                            type="text"
+                            inputmode="numeric"
+                            maxlength="6"
+                            autocomplete="postal-code"
+                            placeholder="6 digit PIN"
+                        >
+                        <span class="address-error">Enter a valid 6 digit PIN code.</span>
+                    </div>
+
+                    <div class="address-field">
+                        <label for="addressState">State</label>
+                        <select
+                            class="address-select"
+                            id="addressState"
+                            name="state"
+                            autocomplete="address-level1"
+                        >
+                            <option value="">Select state</option>
+                            <option>Andhra Pradesh</option>
+                            <option>Arunachal Pradesh</option>
+                            <option>Assam</option>
+                            <option>Bihar</option>
+                            <option>Chhattisgarh</option>
+                            <option>Goa</option>
+                            <option>Gujarat</option>
+                            <option>Haryana</option>
+                            <option>Himachal Pradesh</option>
+                            <option>Jharkhand</option>
+                            <option>Karnataka</option>
+                            <option>Kerala</option>
+                            <option>Madhya Pradesh</option>
+                            <option>Maharashtra</option>
+                            <option>Manipur</option>
+                            <option>Meghalaya</option>
+                            <option>Mizoram</option>
+                            <option>Nagaland</option>
+                            <option>Odisha</option>
+                            <option>Punjab</option>
+                            <option>Rajasthan</option>
+                            <option>Sikkim</option>
+                            <option>Tamil Nadu</option>
+                            <option>Telangana</option>
+                            <option>Tripura</option>
+                            <option>Uttar Pradesh</option>
+                            <option>Uttarakhand</option>
+                            <option>West Bengal</option>
+                            <option>Delhi</option>
+                        </select>
+                        <span class="address-error">Select your state.</span>
+                    </div>
+
+                    <div class="address-field">
+                        <label for="addressHouse">House / Flat</label>
+                        <input
+                            class="address-input"
+                            id="addressHouse"
+                            name="addressLine"
+                            type="text"
+                            autocomplete="street-address"
+                            placeholder="House / flat / building"
+                        >
+                        <span class="address-error">Enter your house / flat details.</span>
+                    </div>
+
+                    <div class="address-field">
+                        <label for="addressArea">Area</label>
+                        <input
+                            class="address-input"
+                            id="addressArea"
+                            name="locality"
+                            type="text"
+                            autocomplete="address-line2"
+                            placeholder="Locality or area"
+                        >
+                        <span class="address-error">Enter your locality or area.</span>
+                    </div>
+
+                    <div class="address-type-block">
+                        <label>Address Type</label>
+
+                        <div class="address-type-box">
+                            <label class="address-type-option">
+                                <input
+                                    type="radio"
+                                    name="addressType"
+                                    value="Home"
+                                    checked
+                                >
+                                <span>HOME</span>
+                            </label>
+
+                            <label class="address-type-option">
+                                <input
+                                    type="radio"
+                                    name="addressType"
+                                    value="Work"
+                                >
+                                <span>WORK</span>
+                            </label>
+
+                            <label class="address-type-option">
+                                <input
+                                    type="radio"
+                                    name="addressType"
+                                    value="Other"
+                                >
+                                <span>OTHER</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="address-save-row">
+                        <button
+                            type="submit"
+                            class="address-save-button"
+                        >
+                            Save Address
+                        </button>
+                    </div>
+
+                </div>
+
+                <p
+                    class="address-status"
+                    id="addressStatus"
+                    aria-live="polite"
+                ></p>
+
+            </form>
+        </section>
+
+        <section class="address-card" id="savedAddressSection">
+            <div class="address-card-header">
+                <h1>Delivery Address</h1>
+            </div>
+
+            <div class="saved-address-list" id="savedAddressList"></div>
+
+            <div class="address-modal-backdrop" id="addressModalBackdrop" aria-hidden="true"></div>
+
+
+        </section>
+
+        <button type="button" class="add-new-address-button" id="addNewAddressButton">+ Add New Address</button>
+
+    </div>
+</main>
+
+<footer class="site-footer">
+    <div class="footer-main">
+
+        <div class="footer-brand">
+            <a
+                href="../index.html"
+                class="footer-logo"
+            >
+                VEDEN
+            </a>
+
+            <p>
+                Your modern marketplace
+                for everyday essentials,
+                technology and lifestyle.
+            </p>
+        </div>
+
+        <div class="footer-column">
+            <h3>Shop</h3>
+            <a href="products.html">All Products</a>
+            <a href="products.html?category=grocery">Grocery</a>
+            <a href="products.html?category=electronics">Electronics</a>
+            <a href="products.html?category=fashion">Fashion</a>
+        </div>
+
+        <div class="footer-column">
+            <h3>Account</h3>
+            <a href="login.html">Login</a>
+            <a href="signup.html">Create Account</a>
+            <a href="cart.html">Cart</a>
+            <a href="checkout.html">Checkout</a>
+        </div>
+
+        <div class="footer-column">
+            <h3>VEDEN</h3>
+            <a href="../index.html">Home</a>
+            <a href="products.html">Marketplace</a>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <span>© 2026 VEDEN. All rights reserved.</span>
+        <span>Built for a better way to shop.</span>
+    </div>
+</footer>
+
+<script src="../script.js"></script>
+
+<script>
+"use strict";
+
+/* =========================================================
+   ADDRESS ACCESS
+   Logged-out users see only the compact login notice.
+   Logged-in users get the existing address page unchanged.
+========================================================= */
+
+function updateAddressAccess(){
+    const notice = document.getElementById("addressLoginRequired");
+    const content = document.getElementById("addressProtectedContent");
+    if(!notice || !content) return;
+
+    let loggedIn = false;
+
+    if(typeof window.isUserLoggedIn === "function"){
+        loggedIn = window.isUserLoggedIn();
+    }else{
+        try{
+            loggedIn = Boolean(
+                JSON.parse(
+                    localStorage.getItem("veden_current_user") || "null"
+                )?.loggedIn === true
+            );
+        }catch(error){
+            loggedIn = false;
+        }
+    }
+
+    notice.hidden = loggedIn;
+    content.hidden = !loggedIn;
+}
+
+updateAddressAccess();
+
+const ADDRESS_KEY = "vedenAddress";
+const SAVED_ADDRESS_KEY = "veden_saved_address";
+
+function getAddressStore(){
+    try{
+        const raw = localStorage.getItem(ADDRESS_KEY);
+        const savedRaw = localStorage.getItem(SAVED_ADDRESS_KEY);
+        if(!raw){
+            if(savedRaw){
+                const saved = JSON.parse(savedRaw);
+                if(saved && typeof saved === "object"){
+                    const migrated = { ...saved, id: saved.id || "address_" + Date.now() };
+                    return { addresses: [migrated], currentId: migrated.id };
+                }
+            }
+            return { addresses: [], currentId: null };
+        }
+
+        const parsed = JSON.parse(raw);
+        if(Array.isArray(parsed)){
+            let currentId = parsed[0]?.id || null;
+            if(savedRaw){
+                try{
+                    const saved = JSON.parse(savedRaw);
+                    if(saved && typeof saved === "object" && saved.id){
+                        currentId = parsed.some(item => item.id === saved.id) ? saved.id : currentId;
+                    }else if(typeof saved === "string" && parsed.some(item => item.id === saved)){
+                        currentId = saved;
+                    }
+                }catch{}
+            }
+            return { addresses: parsed, currentId };
+        }
+
+        if(parsed && Array.isArray(parsed.addresses)){
+            return {
+                addresses: parsed.addresses,
+                currentId: parsed.currentId || localStorage.getItem(SAVED_ADDRESS_KEY) || parsed.addresses[0]?.id || null
+            };
+        }
+
+        if(parsed && typeof parsed === "object"){
+            const legacy = { ...parsed, id: parsed.id || "address_" + Date.now() };
+            return { addresses: [legacy], currentId: legacy.id };
+        }
+    }catch{}
+
+    return { addresses: [], currentId: null };
+}
+
+function saveAddressStore(store){
+    localStorage.setItem(ADDRESS_KEY, JSON.stringify(store));
+    if(store.currentId){
+        const current = store.addresses.find(item => item.id === store.currentId);
+        if(current) localStorage.setItem(SAVED_ADDRESS_KEY, JSON.stringify(current));
+    }else{
+        localStorage.removeItem(SAVED_ADDRESS_KEY);
+    }
+}
+
+function getCurrentAddress(store){
+    return store.addresses.find(item => item.id === store.currentId) || null;
+}
+
+function setHeaderAddress(address){
+    const target = document.getElementById("headerAddressText");
+    if(!target) return;
+    target.textContent = address ? (address.fullName || address.city || "your address") : "your address";
+}
+
+function fillAddressForm(address){
+    if(!address) return;
+    document.getElementById("addressName").value = address.fullName || "";
+    document.getElementById("addressPhone").value = address.phone || "";
+    document.getElementById("addressEmail").value = address.email || "";
+    document.getElementById("addressCity").value = address.city || "";
+    document.getElementById("addressPincode").value = address.pincode || "";
+    document.getElementById("addressState").value = address.state || "";
+    document.getElementById("addressHouse").value = address.addressLine || address.address || "";
+    document.getElementById("addressArea").value = address.locality || "";
+    const radio = document.querySelector(`input[name="addressType"][value="${CSS.escape(address.addressType || "Home")}"]`);
+    if(radio) radio.checked = true;
+}
+
+function clearAddressForm(){
+    document.getElementById("addressForm").reset();
+    document.querySelectorAll(".address-field.invalid").forEach(field => field.classList.remove("invalid"));
+    document.getElementById("addressStatus").textContent = "";
+}
+
+function createSavedCard(address, isCurrent){
+    const card = document.createElement("article");
+    card.className = "saved-address-card" + (isCurrent ? " is-current" : "");
+    card.dataset.addressId = address.id;
+
+    card.innerHTML = `
+        <div class="saved-address-grid">
+            ${detail("Name", address.fullName)}
+            ${detail("City", address.city)}
+            ${detail("Mobile No.", address.phone)}
+            ${detail("PIN Code", address.pincode)}
+            ${detail("Email Address", address.email)}
+            ${detail("State", address.state)}
+            ${detail("Address", address.addressLine || address.address)}
+            ${detail("Area", address.locality)}
+        </div>
+        <div class="address-actions">
+            <button type="button" class="address-action" data-action="edit">Edit</button>
+            <button type="button" class="address-action" data-action="delete">Delete</button>
+            <button type="button" class="address-action primary" data-action="current" ${isCurrent ? "disabled" : ""}>${isCurrent ? "✓ Current" : "Set as Current"}</button>
+        </div>
+    `;
+
+    card.addEventListener("click", function(event){
+        const button = event.target.closest("button[data-action]");
+        if(!button) return;
+
+        const id = card.dataset.addressId;
+        const action = button.dataset.action;
+        const store = getAddressStore();
+        const target = store.addresses.find(item => item.id === id);
+        if(!target) return;
+
+        if(action === "edit"){
+            if(editingAddressId !== null) return;
+            editingAddressId = id;
+            setEditButtonsLocked(true);
+            fillAddressForm(target);
+            openAddressModal(true, card);
+            return;
+        }
+
+        if(action === "delete"){
+            const remaining = store.addresses.filter(item => item.id !== id);
+            store.addresses = remaining;
+            store.currentId = remaining.length ? (store.currentId === id ? remaining[0].id : store.currentId) : null;
+            saveAddressStore(store);
+            renderSavedAddresses();
+            setHeaderAddress(getCurrentAddress(store));
+            return;
+        }
+
+        if(action === "current"){
+            store.currentId = id;
+            saveAddressStore(store);
+            renderSavedAddresses();
+            setHeaderAddress(target);
+        }
+    });
+
+    return card;
+}
+
+function detail(label, value){
+    return `<div class="saved-address-detail"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value || "—")}</strong></div>`;
+}
+
+function escapeHtml(value){
+    return String(value ?? "").replace(/[&<>'"]/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;","\"":"&quot;"}[char]));
+}
+
+let editingAddressId = null;
+let editingAddressCard = null;
+
+function setEditButtonsLocked(locked){
+    document.querySelectorAll('#savedAddressList .address-action[data-action="edit"]').forEach(button => {
+        button.disabled = locked;
+    });
+}
+
+function placeAddressForm(mode, targetCard=null){
+    const form = document.getElementById("addressForm");
+    const panel = document.getElementById("newAddressPanel");
+    const list = document.getElementById("savedAddressList");
+    const heading = document.getElementById("addressFormHeading");
+    if(!form || !panel || !list) return;
+
+    form.hidden = false;
+    form.classList.add("address-form-active");
+
+    if(mode === "edit" && targetCard){
+        /* Edit replaces the selected saved card at exactly its position. */
+        editingAddressCard = targetCard;
+        list.insertBefore(form, targetCard);
+        targetCard.hidden = true;
+        panel.hidden = true;
+        if(heading) heading.textContent = "Edit Delivery Address";
+        return;
+    }
+
+    /* Add New Address gets its own separate full-width box above the
+       Delivery Address section. The saved address stays below. */
+    editingAddressCard = null;
+    if(heading) heading.textContent = "New Delivery Address";
+    panel.hidden = false;
+    panel.insertBefore(form, panel.querySelector(".address-form-placeholder") || null);
+}
+
+function restoreAddressForm(){
+    const form = document.getElementById("addressForm");
+    const panel = document.getElementById("newAddressPanel");
+    const list = document.getElementById("savedAddressList");
+    if(!form || !panel || !list) return;
+
+    if(editingAddressCard){
+        editingAddressCard.hidden = false;
+    }
+
+    panel.appendChild(form);
+    form.hidden = true;
+    form.classList.remove("address-form-active");
+    panel.hidden = true;
+    editingAddressCard = null;
+    setEditButtonsLocked(false);
+}
+
+function openAddressModal(isEditing, targetCard=null){
+    placeAddressForm(isEditing ? "edit" : "add", targetCard);
+    const backdrop = document.getElementById("addressModalBackdrop");
+    if(backdrop) backdrop.setAttribute("aria-hidden", "true");
+}
+
+function closeAddressModal(resetEditing=true){
+    restoreAddressForm();
+    if(resetEditing) editingAddressId = null;
+    document.body.classList.remove("address-modal-open");
+}
+
+function positionAddButton(){
+    const button = document.getElementById("addNewAddressButton");
+    const list = document.getElementById("savedAddressList");
+    if(!button || !list) return;
+
+    /* Keep the button in its permanent position whenever a saved address
+       exists. It is outside the Delivery Address card. */
+    button.style.display = list.querySelector(".saved-address-card") ? "block" : "none";
+}
+
+function renderSavedAddresses(){
+    const store = getAddressStore();
+    const list = document.getElementById("savedAddressList");
+    const form = document.getElementById("addressForm");
+    const panel = document.getElementById("newAddressPanel");
+    if(!list || !form || !panel) return;
+
+    /* Always return the form to its separate panel before rebuilding cards. */
+    if(editingAddressCard) editingAddressCard.hidden = false;
+    panel.appendChild(form);
+    form.hidden = true;
+    form.classList.remove("address-form-active");
+    panel.hidden = true;
+    editingAddressCard = null;
+
+    list.innerHTML = "";
+    store.addresses.forEach(address => {
+        list.appendChild(createSavedCard(address, address.id === store.currentId));
+    });
+
+    const hasAddresses = store.addresses.length > 0;
+    const savedSection = document.getElementById("savedAddressSection");
+    if(savedSection) savedSection.classList.toggle("is-empty", !hasAddresses);
+    positionAddButton();
+
+    /* With no saved address left, return to the normal Delivery Address
+       form state, as on a standard address-management page. */
+    if(!hasAddresses){
+        clearAddressForm();
+        const heading = document.getElementById("addressFormHeading");
+        if(heading) heading.textContent = "Delivery Address";
+        panel.hidden = false;
+        form.hidden = false;
+        form.classList.add("address-form-active");
+    }
+
+    setHeaderAddress(getCurrentAddress(store));
+}
+
+const addNewAddressButton = document.getElementById("addNewAddressButton");
+if(addNewAddressButton){
+    addNewAddressButton.addEventListener("click", function(){
+        editingAddressId = null;
+        clearAddressForm();
+        openAddressModal(false);
+        /* The button stays visible in its permanent position. */
+        positionAddButton();
+    });
+}
+
+renderSavedAddresses();
+
+function markField(id, valid){
+    const field = document.getElementById(id);
+    if(!field) return false;
+    const wrapper = field.closest(".address-field");
+    if(wrapper) wrapper.classList.toggle("invalid", !valid);
+    return valid;
+}
+
+const addressForm = document.getElementById("addressForm");
+addressForm.addEventListener("submit", function(event){
+    event.preventDefault();
+
+    const name = document.getElementById("addressName");
+    const phone = document.getElementById("addressPhone");
+    const email = document.getElementById("addressEmail");
+    const city = document.getElementById("addressCity");
+    const pincode = document.getElementById("addressPincode");
+    const state = document.getElementById("addressState");
+    const house = document.getElementById("addressHouse");
+    const area = document.getElementById("addressArea");
+    let valid = true;
+
+    valid = markField("addressName", name.value.trim().length >= 2) && valid;
+    valid = markField("addressPhone", /^[6-9]\d{9}$/.test(phone.value.trim())) && valid;
+    valid = markField("addressEmail", /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) && valid;
+    valid = markField("addressCity", city.value.trim().length >= 2) && valid;
+    valid = markField("addressPincode", /^\d{6}$/.test(pincode.value.trim())) && valid;
+    valid = markField("addressState", state.value.trim().length > 0) && valid;
+    valid = markField("addressHouse", house.value.trim().length >= 10) && valid;
+    valid = markField("addressArea", area.value.trim().length >= 2) && valid;
+
+    const status = document.getElementById("addressStatus");
+    if(!valid){
+        status.textContent = "Please complete your address details.";
+        return;
+    }
+
+    const store = getAddressStore();
+    const customer = {
+        id: editingAddressId || ("address_" + Date.now() + "_" + Math.random().toString(36).slice(2,8)),
+        firstName: name.value.trim(),
+        lastName: "",
+        fullName: name.value.trim(),
+        phone: phone.value.trim(),
+        email: email.value.trim(),
+        addressLine: house.value.trim(),
+        address: house.value.trim(),
+        locality: area.value.trim(),
+        landmark: "",
+        city: city.value.trim(),
+        state: state.value.trim(),
+        pincode: pincode.value.trim(),
+        addressType: document.querySelector('input[name="addressType"]:checked')?.value || "Home"
+    };
+
+    if(editingAddressId){
+        const index = store.addresses.findIndex(item => item.id === editingAddressId);
+        if(index !== -1) store.addresses[index] = customer;
+    }else{
+        store.addresses.push(customer);
+        if(!store.currentId) store.currentId = customer.id;
+    }
+
+    editingAddressId = null;
+    saveAddressStore(store);
+    clearAddressForm();
+    closeAddressModal();
+    renderSavedAddresses();
+    const savedStatus = document.getElementById("addressStatus");
+    if(savedStatus) savedStatus.textContent = "Address saved successfully.";
+});
+
+const addressModalBackdrop = document.getElementById("addressModalBackdrop");
+if(addressModalBackdrop) addressModalBackdrop.addEventListener("click", () => { clearAddressForm(); closeAddressModal(); });
+
+const searchForm = document.getElementById("addressSearchForm");
+
+searchForm.addEventListener("submit", function(event){
+    event.preventDefault();
+
+    const query =
+        document.getElementById("addressSearchInput").value.trim();
+
+    if(query){
+        window.location.href =
+            "products.html?search=" + encodeURIComponent(query);
+    }else{
+        window.location.href = "products.html";
+    }
+});
+
+if(
+    window.VEDEN &&
+    typeof window.VEDEN.updateCartBadge === "function"
+){
+    window.VEDEN.updateCartBadge();
+}
+</script>
+
+</body>
+</html>

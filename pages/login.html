@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Login to your VEDEN account."
+    >
+
+    <title>Login | VEDEN</title>
+
+    <link
+        rel="stylesheet"
+        href="../style.css"
+    >
+    <style>
+
+/* =====================================================
+   VEDEN LOGIN — THIN FULL-WIDTH AUTH BOX
+===================================================== */
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    background: #0b0b0b;
+    color: #ffffff;
+}
+
+.auth-page {
+    width: 100%;
+    min-height: calc(100vh - 78px);
+    box-sizing: border-box;
+    padding: 22px 16px 28px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.auth-container {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+}
+
+.auth-card {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 14px clamp(14px, 2.2vw, 28px) 15px;
+    background: linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.055),
+        rgba(255, 255, 255, 0.02)
+    );
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 10px;
+    box-shadow: none;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+.auth-header {
+    display: none !important;
+}
+
+.auth-message {
+    display: none;
+    margin: 0 0 10px;
+    padding: 8px 11px;
+    border-radius: 7px;
+    font-size: 12px;
+    line-height: 1.35;
+}
+
+.auth-message.show {
+    display: block;
+}
+
+.auth-message.error {
+    border: 1px solid rgba(255, 90, 90, 0.28);
+    background: rgba(255, 70, 70, 0.08);
+}
+
+.auth-message.success {
+    border: 1px solid rgba(212, 184, 76, 0.32);
+    background: rgba(212, 184, 76, 0.08);
+}
+
+.auth-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+}
+
+.form-group {
+    width: 100%;
+    margin: 0;
+}
+
+.form-group label {
+    display: block;
+    margin: 0 0 5px;
+    color: rgba(255, 255, 255, 0.84);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1px;
+}
+
+.form-group input {
+    width: 100%;
+    height: 37px;
+    box-sizing: border-box;
+    padding: 0 11px;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 7px;
+    outline: none;
+    background: rgba(255, 255, 255, 0.04);
+    color: #ffffff;
+    font: inherit;
+    font-size: 12px;
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+.form-group input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.form-group input:focus {
+    border-color: rgba(212, 184, 76, 0.62);
+    background: rgba(255, 255, 255, 0.052);
+    box-shadow: none;
+}
+
+.form-group input.invalid {
+    border-color: rgba(255, 90, 90, 0.68);
+}
+
+.field-error {
+    display: none;
+    margin-top: 4px;
+    color: #ff8f8f;
+    font-size: 10px;
+    line-height: 1.3;
+}
+
+.field-error.show {
+    display: block;
+}
+
+/* Password field + compact inline Show control. */
+.input-wrapper { position: relative; width: 100%; }
+.input-wrapper input { padding-right: 62px; }
+.password-toggle {
+    position: absolute; top: 50%; right: 5px; transform: translateY(-50%);
+    height: 27px; min-width: 48px; padding: 0 8px;
+    border: 1px solid rgba(255,255,255,.13); border-radius: 5px;
+    background: rgba(255,255,255,.045); color: rgba(255,255,255,.72);
+    font: inherit; font-size: 10px; line-height: 1; cursor: pointer;
+    transition: background .2s ease, border-color .2s ease, color .2s ease;
+}
+.password-toggle:hover { background: rgba(255,255,255,.075); border-color: rgba(255,255,255,.22); color:#fff; }
+.password-toggle:focus-visible { outline:none; border-color:rgba(212,184,76,.62); }
+
+.auth-options,
+.auth-divider,
+.social-login {
+    display: none !important;
+}
+
+.auth-button {
+    width: 100%;
+    height: 36px;
+    margin: 1px 0 0;
+    border: 1px solid rgba(212, 184, 76, 0.48);
+    border-radius: 7px;
+    background: rgba(212, 184, 76, 0.13);
+    color: #ffffff;
+    cursor: pointer;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.15px;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.auth-button:hover {
+    background: rgba(212, 184, 76, 0.2);
+    border-color: rgba(212, 184, 76, 0.78);
+}
+
+.auth-button:active {
+    transform: none;
+}
+
+.auth-button:disabled {
+    opacity: 0.65;
+    cursor: wait;
+}
+
+.auth-signup {
+    margin: 10px 0 0;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 11px;
+    line-height: 1.35;
+}
+
+.auth-signup a {
+    color: #d4b84c;
+    text-decoration: none;
+}
+
+.auth-signup a:hover {
+    text-decoration: underline;
+}
+
+.site-header .header-inner {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.site-header .header-actions,
+.site-header .header-actions a,
+.site-header .search-form,
+.site-header .search-button,
+.site-header .veden-address-link {
+    visibility: visible;
+    opacity: 1;
+}
+
+@media (max-width: 700px) {
+    .auth-page {
+        min-height: calc(100vh - 70px);
+        padding: 16px 10px 22px;
+    }
+
+    .auth-card {
+        padding: 12px 10px 13px;
+        border-radius: 9px;
+    }
+
+    .auth-form {
+        gap: 10px;
+    }
+
+    .form-group input {
+        height: 36px;
+        font-size: 12px;
+    }
+
+    .auth-button {
+        height: 35px;
+    }
+}
+
+@media (max-width: 430px) {
+    .auth-page {
+        padding: 12px 7px 18px;
+    }
+
+    .auth-card {
+        padding: 10px 8px 11px;
+        border-radius: 8px;
+    }
+
+    .form-group label {
+        font-size: 10px;
+    }
+
+    .form-group input {
+        height: 35px;
+        font-size: 11px;
+    }
+
+    .password-toggle { right: 4px; height: 26px; min-width: 46px; padding: 0 7px; font-size: 10px; }
+
+    .auth-button {
+        height: 34px;
+        font-size: 11px;
+    }
+
+    .auth-signup {
+        font-size: 10px;
+    }
+}
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="site-header">
+
+    <div class="header-inner">
+
+
+        <a
+            href="../index.html"
+            class="brand-logo"
+        >
+
+            VEDEN
+
+        </a>
+
+
+        <a
+            href="address.html"
+            class="header-info veden-address-link"
+            aria-label="Manage delivery address"
+        >
+            <span>
+                Address
+            </span>
+        </a>
+
+
+        <form
+            class="search-form"
+            id="loginSearchForm"
+        >
+
+            <input
+                type="search"
+                id="loginSearchInput"
+                class="search-input"
+                placeholder="Search products, brands..."
+                autocomplete="off"
+            >
+
+
+            <button
+                type="submit"
+                class="search-button"
+            >
+
+                Search
+
+            </button>
+
+        </form>
+
+
+        <nav class="header-actions">
+
+
+            <a
+                href="login.html"
+                class="header-login"
+                id="headerLoginLink"
+            >
+
+                Login
+
+            </a>
+
+
+            <a
+                href="cart.html"
+                class="header-cart"
+            >
+
+                Cart
+
+                <span
+                    class="cart-badge"
+                    data-cart-count
+                >
+
+                    0
+
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="auth-page">
+
+    <div class="auth-container">
+
+        <div class="auth-card">
+
+            <div
+                class="auth-message"
+                id="authMessage"
+            ></div>
+
+            <form
+                class="auth-form"
+                id="loginForm"
+                novalidate
+            >
+
+                <div class="form-group">
+
+                    <label for="loginEmail">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="loginEmail"
+                        name="email"
+                        placeholder=""
+                        autocomplete="email"
+                        inputmode="email"
+                        pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}"
+                        required
+                    >
+
+                    <span
+                        class="field-error"
+                        id="emailError"
+                    >
+                        Please enter your email address.
+                    </span>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="loginPassword">
+                        Password
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <input
+                            type="password"
+                            id="loginPassword"
+                            name="password"
+                            placeholder=""
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            id="passwordToggle"
+                        >
+                            Show
+                        </button>
+
+                    </div>
+
+                    <span
+                        class="field-error"
+                        id="passwordError"
+                    >
+                        Please enter your password.
+                    </span>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="auth-button"
+                    id="loginButton"
+                >
+                    Sign In
+                </button>
+
+            </form>
+
+            <p class="auth-signup">
+                Don't have an account?
+                <a href="signup.html">Create one</a>
+            </p>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="site-footer">
+
+    <div class="footer-main">
+        <div class="footer-brand">
+            <a href="../index.html" class="footer-logo">VEDEN</a>
+            <p>Your modern marketplace for everyday essentials, technology and lifestyle.</p>
+        </div>
+
+        <div class="footer-column">
+            <h3>Shop</h3>
+            <a href="products.html">All Products</a>
+            <a href="products.html?category=grocery">Grocery</a>
+            <a href="products.html?category=electronics">Electronics</a>
+            <a href="products.html?category=fashion">Fashion</a>
+        </div>
+
+        <div class="footer-column">
+            <h3>Account</h3>
+            <a href="login.html">Login</a>
+            <a href="signup.html">Create Account</a>
+            <a href="cart.html">Cart</a>
+            <a href="checkout.html">Checkout</a>
+        </div>
+
+        <div class="footer-column">
+            <h3>VEDEN</h3>
+            <a href="../index.html">Home</a>
+            <a href="products.html">Marketplace</a>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <span>© 2026 VEDEN. All rights reserved.</span>
+        <span>Built for a better way to shop.</span>
+    </div>
+
+</footer>
+
+<script src="../script.js"></script>
+
+
+<script>
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+document
+
+    .getElementById(
+
+        "loginSearchForm"
+
+    )
+
+    .addEventListener(
+
+        "submit",
+
+        event => {
+
+
+            event.preventDefault();
+
+
+            const query =
+
+                document
+
+                    .getElementById(
+
+                        "loginSearchInput"
+
+                    )
+
+                    .value
+
+                    .trim();
+
+
+            if (!query) return;
+
+
+            window.location.href =
+
+                `products.html?search=${encodeURIComponent(
+
+                    query
+
+                )}`;
+
+        }
+
+    );
+
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const loginForm =
+
+    document.getElementById(
+
+        "loginForm"
+
+    );
+
+
+const loginEmail =
+
+    document.getElementById(
+
+        "loginEmail"
+
+    );
+
+
+const loginPassword =
+
+    document.getElementById(
+
+        "loginPassword"
+
+    );
+
+
+const passwordToggle =
+
+    document.getElementById(
+
+        "passwordToggle"
+
+    );
+
+
+const authMessage =
+
+    document.getElementById(
+
+        "authMessage"
+
+    );
+
+
+const loginButton =
+
+    document.getElementById(
+
+        "loginButton"
+
+    );
+
+
+
+/* =====================================================
+   PASSWORD VISIBILITY
+===================================================== */
+
+passwordToggle.addEventListener("click", () => {
+    const isPassword = loginPassword.type === "password";
+    loginPassword.type = isPassword ? "text" : "password";
+    passwordToggle.textContent = isPassword ? "Hide" : "Show";
+    passwordToggle.setAttribute("aria-label", isPassword ? "Hide password" : "Show password");
+});
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+function showMessage(
+
+    message,
+
+    type
+
+) {
+
+
+    authMessage.textContent =
+
+        message;
+
+
+    authMessage.className =
+
+        `auth-message show ${type}`;
+
+}
+
+
+
+/* =====================================================
+   CLEAR ERROR
+===================================================== */
+
+function clearErrors() {
+
+
+    document
+
+        .querySelectorAll(
+
+            ".field-error"
+
+        )
+
+        .forEach(
+
+            error =>
+
+                error.classList.remove(
+
+                    "show"
+
+                )
+
+        );
+
+
+    document
+
+        .querySelectorAll(
+
+            ".form-group input"
+
+        )
+
+        .forEach(
+
+            input =>
+
+                input.classList.remove(
+
+                    "invalid"
+
+                )
+
+        );
+
+}
+
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+loginForm.addEventListener(
+
+    "submit",
+
+    event => {
+
+
+        event.preventDefault();
+
+
+        clearErrors();
+
+
+        document.getElementById("emailError").textContent =
+
+            "Please enter your email address.";
+
+
+        document.getElementById("passwordError").textContent =
+
+            "Please enter your password.";
+
+
+        authMessage.className =
+
+            "auth-message";
+
+
+        const email =
+
+            loginEmail.value
+
+                .trim()
+
+                .toLowerCase();
+
+
+        const password =
+
+            loginPassword.value;
+
+
+        let valid = true;
+
+
+
+        /* EMAIL */
+
+
+        if (
+
+            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+                .test(
+
+                    email
+
+                )
+
+        ) {
+
+
+            loginEmail.classList.add(
+
+                "invalid"
+
+            );
+
+
+            document
+
+                .getElementById(
+
+                    "emailError"
+
+                )
+
+                .classList.add(
+
+                    "show"
+
+                );
+
+
+            valid = false;
+
+        }
+
+
+
+        /* PASSWORD */
+
+
+        if (
+
+            password.length < 6
+
+        ) {
+
+
+            loginPassword.classList.add(
+
+                "invalid"
+
+            );
+
+
+            document
+
+                .getElementById(
+
+                    "passwordError"
+
+                )
+
+                .classList.add(
+
+                    "show"
+
+                );
+
+
+            valid = false;
+
+        }
+
+
+
+        if (!valid) return;
+
+
+
+        /* =============================================
+           GET REGISTERED USERS
+        ============================================= */
+
+
+        const users =
+
+            JSON.parse(
+
+                localStorage.getItem(
+
+                    "veden_users"
+
+                ) || "[]"
+
+            );
+
+
+        const user =
+
+            users.find(
+
+                item =>
+
+                    item.email === email
+
+            );
+
+
+
+        /* =============================================
+           USER NOT FOUND
+        ============================================= */
+
+
+        if (!user) {
+
+
+            loginEmail.classList.add(
+
+                "invalid"
+
+            );
+
+
+            const emailError =
+
+                document.getElementById(
+
+                    "emailError"
+
+                );
+
+
+            emailError.textContent =
+
+                "No account found with this email. Please check your email or create an account.";
+
+
+            emailError.classList.add(
+
+                "show"
+
+            );
+
+
+            return;
+
+        }
+
+
+
+        /* =============================================
+           WRONG PASSWORD
+        ============================================= */
+
+
+        if (
+
+            user.password !== password
+
+        ) {
+
+
+            loginPassword.classList.add(
+
+                "invalid"
+
+            );
+
+
+            const passwordError =
+
+                document.getElementById(
+
+                    "passwordError"
+
+                );
+
+
+            passwordError.textContent =
+
+                "Incorrect password. Please try again.";
+
+
+            passwordError.classList.add(
+
+                "show"
+
+            );
+
+
+            return;
+
+        }
+
+
+
+        /* =============================================
+           LOGIN SUCCESS
+        ============================================= */
+
+
+        const session = {
+
+
+            id:
+
+                user.id,
+
+
+            name:
+
+                user.name,
+
+
+            email:
+
+                user.email,
+
+
+            loggedIn:
+
+                true,
+
+
+            loginTime:
+
+                new Date()
+
+                    .toISOString()
+
+        };
+
+
+        localStorage.setItem(
+
+            "veden_current_user",
+
+            JSON.stringify(
+
+                session
+
+            )
+
+        );
+
+
+
+        /* =============================================
+           SUCCESS
+        ============================================= */
+
+
+        loginButton.disabled =
+
+            true;
+
+
+        loginButton.textContent =
+
+            "Signing In...";
+
+
+        showMessage(
+
+            "Login successful. Redirecting...",
+
+            "success"
+
+        );
+
+
+
+        setTimeout(
+
+            () => {
+
+
+                const redirect =
+
+                    sessionStorage.getItem(
+
+                        "veden_login_redirect"
+
+                    );
+
+
+                sessionStorage.removeItem(
+
+                    "veden_login_redirect"
+
+                );
+
+
+                window.location.href =
+
+                    redirect ||
+
+                    "../index.html";
+
+
+            },
+
+            700
+
+        );
+
+    }
+
+);
+
+
+
+/* =====================================================
+   UPDATE CART
+===================================================== */
+
+if (
+
+    window.VEDEN &&
+
+    window.VEDEN.updateCartBadges
+
+) {
+
+
+    window.VEDEN.updateCartBadges();
+
+}
+
+
+/* =====================================================
+   HEADER ACCOUNT STATE
+===================================================== */
+
+if (window.VEDEN && typeof window.VEDEN.updateAccountUI === "function") {
+    window.VEDEN.updateAccountUI();
+}
+
+</script>
+
+
+</body>
+
+</html>

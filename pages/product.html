@@ -1,0 +1,3287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Product details, ratings and reviews on VEDEN."
+    >
+
+    <title>Product | VEDEN</title>
+
+    <link
+        rel="stylesheet"
+        href="../style.css"
+    >
+
+    <style>
+
+        /* =====================================================
+           PRODUCT PAGE
+        ===================================================== */
+
+        .product-page {
+
+            width: 100%;
+
+            max-width: 1480px;
+
+            margin: 0 auto;
+
+            padding: 55px 42px 100px;
+
+        }
+
+
+        .breadcrumb {
+
+            display: flex;
+
+            align-items: center;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+            margin-bottom: 38px;
+
+            color: #666;
+
+            font-size: 11px;
+
+        }
+
+
+        .breadcrumb a {
+
+            color: #888;
+
+            transition: 180ms ease;
+
+        }
+
+
+        .breadcrumb a:hover {
+
+            color: #fff;
+
+        }
+
+
+        .breadcrumb span {
+
+            color: #444;
+
+        }
+
+
+        .product-detail {
+
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1.1fr)
+                minmax(400px, .9fr);
+
+            gap: 70px;
+
+            align-items: start;
+
+        }
+
+
+        /* =====================================================
+           PRODUCT IMAGE
+        ===================================================== */
+
+        .product-gallery {
+
+            position: sticky;
+
+            top: 100px;
+
+        }
+
+
+        .product-main-image {
+
+            position: relative;
+
+            width: 100%;
+
+            aspect-ratio: 1 / .9;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            overflow: hidden;
+
+            background: #141414;
+
+            border:
+                1px solid
+                rgba(255,255,255,.08);
+
+            border-radius: 22px;
+
+        }
+
+
+        .product-main-image img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+        }
+
+
+        .product-discount {
+
+            position: absolute;
+
+            top: 18px;
+
+            left: 18px;
+
+            padding: 7px 10px;
+
+            background: #fff;
+
+            color: #000;
+
+            border-radius: 6px;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+        }
+
+
+        /* =====================================================
+           PRODUCT INFO
+        ===================================================== */
+
+        .product-info {
+
+            padding-top: 5px;
+
+        }
+
+
+        .product-category {
+
+            display: inline-block;
+
+            margin-bottom: 12px;
+
+            color: #777;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            letter-spacing: .18em;
+
+            text-transform: uppercase;
+
+        }
+
+
+        .product-info h1 {
+
+            margin: 0;
+
+            color: #f5f5f5;
+
+            font-size:
+                clamp(
+                    30px,
+                    4vw,
+                    52px
+                );
+
+            line-height: 1.08;
+
+            letter-spacing: -.045em;
+
+        }
+
+
+        .product-brand-detail {
+
+            margin-top: 12px;
+
+            color: #777;
+
+            font-size: 13px;
+
+        }
+
+
+        .product-rating-detail {
+
+            display: flex;
+
+            align-items: center;
+
+            flex-wrap: wrap;
+
+            gap: 12px;
+
+            margin-top: 22px;
+
+        }
+
+
+        .rating-stars {
+
+            color: #f0f0f0;
+
+            font-size: 15px;
+
+            letter-spacing: 2px;
+
+        }
+
+
+        .rating-number {
+
+            color: #fff;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+        }
+
+
+        .review-link {
+
+            color: #777;
+
+            font-size: 12px;
+
+        }
+
+
+        .product-price-detail {
+
+            display: flex;
+
+            align-items: baseline;
+
+            flex-wrap: wrap;
+
+            gap: 12px;
+
+            margin-top: 30px;
+
+        }
+
+
+        .product-price-detail strong {
+
+            color: #fff;
+
+            font-size: 30px;
+
+        }
+
+
+        .product-price-detail del {
+
+            color: #666;
+
+            font-size: 14px;
+
+        }
+
+
+        .save-amount {
+
+            color: #8f8f8f;
+
+            font-size: 11px;
+
+        }
+
+
+        .product-description {
+
+            max-width: 650px;
+
+            margin-top: 25px;
+
+            color: #858585;
+
+            font-size: 14px;
+
+            line-height: 1.8;
+
+        }
+
+
+        /* =====================================================
+           BUY AREA
+        ===================================================== */
+
+        .buy-area {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-top: 32px;
+
+        }
+
+
+        .quantity-control {
+
+            height: 48px;
+
+            display: flex;
+
+            align-items: center;
+
+            background: #141414;
+
+            border:
+                1px solid
+                rgba(255,255,255,.1);
+
+            border-radius: 9px;
+
+            overflow: hidden;
+
+        }
+
+
+        .quantity-button {
+
+            width: 42px;
+
+            height: 100%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: transparent;
+
+            color: #fff;
+
+            border: none;
+
+            font-size: 18px;
+
+            cursor: pointer;
+
+        }
+
+
+        .quantity-button:hover {
+
+            background: #1c1c1c;
+
+        }
+
+
+        .quantity-value {
+
+            min-width: 35px;
+
+            color: #fff;
+
+            text-align: center;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+        }
+
+
+        .detail-add-cart {
+
+            flex: 1;
+
+            min-height: 48px;
+
+            background: #fff;
+
+            color: #000;
+
+            border: none;
+
+            border-radius: 9px;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            transition: 180ms ease;
+
+            cursor: pointer;
+
+        }
+
+
+        .detail-add-cart:hover {
+
+            background: #ddd;
+
+        }
+
+
+        .detail-add-cart.added {
+
+            background: #252525;
+
+            color: #fff;
+
+        }
+
+
+        /* =====================================================
+           PRODUCT FEATURES
+        ===================================================== */
+
+        .product-features {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    2,
+                    minmax(0,1fr)
+                );
+
+            gap: 10px;
+
+            margin-top: 25px;
+
+        }
+
+
+        .feature-item {
+
+            padding: 16px;
+
+            background: #111;
+
+            border:
+                1px solid
+                rgba(255,255,255,.07);
+
+            border-radius: 10px;
+
+        }
+
+
+        .feature-item strong {
+
+            display: block;
+
+            margin-bottom: 4px;
+
+            color: #ddd;
+
+            font-size: 11px;
+
+        }
+
+
+        .feature-item span {
+
+            color: #666;
+
+            font-size: 10px;
+
+        }
+
+
+        /* =====================================================
+           PRODUCT SPECIFICATIONS
+        ===================================================== */
+
+        .product-specifications {
+
+            margin-top: 35px;
+
+            padding-top: 30px;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,.08);
+
+        }
+
+
+        .product-specifications h2 {
+
+            margin: 0 0 18px;
+
+            color: #f5f5f5;
+
+            font-size: 20px;
+
+            letter-spacing: -.02em;
+
+        }
+
+
+        .veden-spec-row {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            padding: 13px 0;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,.05);
+
+        }
+
+
+        .veden-spec-label {
+
+            color: #666;
+
+            font-size: 11px;
+
+        }
+
+
+        .veden-spec-value {
+
+            color: #ddd;
+
+            font-size: 11px;
+
+            font-weight: 600;
+
+            text-align: right;
+
+        }
+
+
+        /* =====================================================
+           REVIEWS
+        ===================================================== */
+
+        .reviews-section {
+
+            margin-top: 100px;
+
+            padding-top: 70px;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,.08);
+
+        }
+
+
+        .reviews-header {
+
+            display: flex;
+
+            align-items: flex-end;
+
+            justify-content: space-between;
+
+            gap: 30px;
+
+            margin-bottom: 35px;
+
+        }
+
+
+        .reviews-header h2 {
+
+            margin: 0;
+
+            font-size: 32px;
+
+            letter-spacing: -.035em;
+
+        }
+
+
+        .review-summary {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+        }
+
+
+        .review-score {
+
+            font-size: 32px;
+
+            font-weight: 700;
+
+        }
+
+
+        .review-summary-text {
+
+            color: #777;
+
+            font-size: 11px;
+
+        }
+
+
+        .reviews-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    3,
+                    minmax(0,1fr)
+                );
+
+            gap: 18px;
+
+        }
+
+
+        .review-card {
+
+            padding: 24px;
+
+            background: #111;
+
+            border:
+                1px solid
+                rgba(255,255,255,.07);
+
+            border-radius: 14px;
+
+        }
+
+
+        .review-top {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .review-user {
+
+            color: #ddd;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+        }
+
+
+        .review-date {
+
+            color: #555;
+
+            font-size: 10px;
+
+        }
+
+
+        .review-stars {
+
+            margin-bottom: 12px;
+
+            color: #ddd;
+
+            font-size: 12px;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        .review-title {
+
+            margin-bottom: 8px;
+
+            color: #eee;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+        }
+
+
+        .review-text {
+
+            color: #777;
+
+            font-size: 12px;
+
+            line-height: 1.7;
+
+        }
+
+
+        .verified-review {
+
+            display: inline-block;
+
+            margin-top: 15px;
+
+            color: #777;
+
+            font-size: 9px;
+
+        }
+
+
+        /* =====================================================
+           RELATED PRODUCTS
+        ===================================================== */
+
+        .related-section {
+
+            margin-top: 100px;
+
+            padding-top: 70px;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,.08);
+
+        }
+
+
+        .related-header {
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .related-header h2 {
+
+            margin: 0;
+
+            color: #f5f5f5;
+
+            font-size: 32px;
+
+            letter-spacing: -.035em;
+
+        }
+
+
+        .related-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    4,
+                    minmax(0,1fr)
+                );
+
+            gap: 18px;
+
+        }
+
+
+        .veden-product-card {
+
+            background: #111;
+
+            border:
+                1px solid
+                rgba(255,255,255,.07);
+
+            border-radius: 14px;
+
+            overflow: hidden;
+
+            cursor: pointer;
+
+            transition:
+                transform 180ms ease,
+                border-color 180ms ease;
+
+        }
+
+
+        .veden-product-card:hover {
+
+            transform: translateY(-3px);
+
+            border-color:
+                rgba(255,255,255,.18);
+
+        }
+
+
+        .veden-product-image {
+
+            width: 100%;
+
+            aspect-ratio: 1 / 1;
+
+            background: #151515;
+
+            overflow: hidden;
+
+        }
+
+
+        .veden-product-image img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+        }
+
+
+        .veden-product-content {
+
+            padding: 16px;
+
+        }
+
+
+        .veden-product-brand {
+
+            margin-bottom: 5px;
+
+            color: #666;
+
+            font-size: 9px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: .1em;
+
+        }
+
+
+        .veden-product-name {
+
+            margin: 0;
+
+            color: #eee;
+
+            font-size: 13px;
+
+            line-height: 1.4;
+
+        }
+
+
+        .veden-product-rating {
+
+            margin-top: 9px;
+
+            color: #ccc;
+
+            font-size: 10px;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        .veden-product-content strong {
+
+            display: block;
+
+            margin-top: 10px;
+
+            color: #fff;
+
+            font-size: 14px;
+
+        }
+
+
+        /* =====================================================
+           ERROR
+        ===================================================== */
+
+        .product-error {
+
+            min-height: 500px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+        }
+
+
+        .product-error h1 {
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .product-error p {
+
+            color: #666;
+
+            font-size: 13px;
+
+        }
+
+
+        .back-button {
+
+            margin-top: 25px;
+
+            padding: 12px 22px;
+
+            background: #fff;
+
+            color: #000;
+
+            border: none;
+
+            border-radius: 8px;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1100px) {
+
+            .related-grid {
+
+                grid-template-columns:
+                    repeat(
+                        2,
+                        minmax(0,1fr)
+                    );
+
+            }
+
+        }
+
+
+        @media (max-width: 1000px) {
+
+            .product-detail {
+
+                grid-template-columns:
+                    1fr;
+
+                gap: 45px;
+
+            }
+
+
+            .product-gallery {
+
+                position: static;
+
+            }
+
+
+            .product-main-image {
+
+                max-width: 750px;
+
+            }
+
+
+            .reviews-grid {
+
+                grid-template-columns:
+                    repeat(
+                        2,
+                        minmax(0,1fr)
+                    );
+
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .product-page {
+
+                padding:
+                    30px 14px 70px;
+
+            }
+
+
+            .product-detail {
+
+                gap: 35px;
+
+            }
+
+
+            .product-info h1 {
+
+                font-size: 34px;
+
+            }
+
+
+            .buy-area {
+
+                align-items: stretch;
+
+                flex-direction: column;
+
+            }
+
+
+            .quantity-control {
+
+                width: 100%;
+
+                justify-content: center;
+
+            }
+
+
+            .detail-add-cart {
+
+                width: 100%;
+
+            }
+
+
+            .product-features {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .veden-spec-row {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+
+                gap: 5px;
+
+            }
+
+
+            .veden-spec-value {
+
+                text-align: left;
+
+            }
+
+
+            .reviews-header {
+
+                align-items:
+                    flex-start;
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .reviews-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .related-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="site-header">
+
+    <div class="header-inner">
+
+
+        <a
+            href="../index.html"
+            class="brand-logo"
+        >
+
+            VEDEN
+
+        </a>
+
+
+        <a
+            href="address.html"
+            class="header-info veden-address-link"
+            aria-label="Manage delivery address"
+        >
+            <span>
+                Deliver to
+                <strong>your address</strong>
+            </span>
+        </a>
+
+
+        <form
+            class="search-form"
+            id="productSearchForm"
+        >
+
+            <input
+                type="search"
+                id="productSearchInput"
+                class="search-input"
+                placeholder="Search products, brands..."
+                autocomplete="off"
+                aria-label="Search products"
+            >
+
+
+            <button
+                type="submit"
+                class="search-button"
+                aria-label="Search"
+            >
+
+                Search
+
+            </button>
+
+        </form>
+
+
+        <nav
+            class="header-actions"
+            aria-label="Account navigation"
+        >
+
+
+            <a
+                href="login.html"
+                class="header-login"
+            >
+
+                Login
+
+            </a>
+
+
+            <a
+                href="cart.html"
+                class="header-cart"
+            >
+
+                Cart
+
+                <span
+                    class="cart-badge"
+                    data-cart-count
+                >
+
+                    0
+
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="product-page">
+
+
+    <div
+        id="productContainer"
+    >
+
+        <!-- PRODUCT GENERATED HERE -->
+
+    </div>
+
+
+
+    <!-- =================================================
+         REVIEWS
+    ================================================= -->
+
+    <section
+        class="reviews-section"
+        id="reviewsSection"
+        style="display:none;"
+    >
+
+
+        <div class="reviews-header">
+
+
+            <div>
+
+                <span class="products-kicker">
+
+                    CUSTOMER FEEDBACK
+
+                </span>
+
+
+                <h2>
+
+                    Reviews
+
+                </h2>
+
+            </div>
+
+
+            <div class="review-summary">
+
+
+                <span
+                    class="review-score"
+                    id="reviewScore"
+                >
+
+                    0.0
+
+                </span>
+
+
+                <div>
+
+
+                    <div
+                        class="rating-stars"
+                        id="reviewSummaryStars"
+                    >
+
+                        ☆☆☆☆☆
+
+                    </div>
+
+
+                    <div
+                        class="review-summary-text"
+                        id="reviewSummaryText"
+                    >
+
+                        0 reviews
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        <div
+            class="reviews-grid"
+            id="reviewsGrid"
+        >
+
+            <!-- REVIEWS GENERATED HERE -->
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         RELATED PRODUCTS
+    ================================================= -->
+
+    <section
+        class="related-section"
+        id="relatedSection"
+        style="display:none;"
+    >
+
+        <div class="related-header">
+
+            <span class="products-kicker">
+
+                YOU MAY ALSO LIKE
+
+            </span>
+
+            <h2>
+
+                Related Products
+
+            </h2>
+
+        </div>
+
+
+        <div
+            class="related-grid"
+            id="relatedProductsGrid"
+        >
+
+            <!-- JS -->
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="site-footer">
+
+
+    <div class="footer-main">
+
+
+        <div class="footer-brand">
+
+
+            <a
+                href="../index.html"
+                class="footer-logo"
+            >
+
+                VEDEN
+
+            </a>
+
+
+            <p>
+
+                Your modern marketplace
+                for everyday essentials,
+                technology and lifestyle.
+
+            </p>
+
+
+        </div>
+
+
+        <div class="footer-column">
+
+
+            <h3>
+
+                Shop
+
+            </h3>
+
+
+            <a href="products.html">
+
+                All Products
+
+            </a>
+
+
+            <a href="products.html?category=grocery">
+
+                Grocery
+
+            </a>
+
+
+            <a href="products.html?category=electronics">
+
+                Electronics
+
+            </a>
+
+
+            <a href="products.html?category=fashion">
+
+                Fashion
+
+            </a>
+
+
+        </div>
+
+
+        <div class="footer-column">
+
+
+            <h3>
+
+                Account
+
+            </h3>
+
+
+            <a href="login.html">
+
+                Login
+
+            </a>
+
+
+            <a href="signup.html">
+
+                Create Account
+
+            </a>
+
+
+            <a href="cart.html">
+
+                Cart
+
+            </a>
+
+
+            <a href="checkout.html">
+
+                Checkout
+
+            </a>
+
+
+        </div>
+
+
+        <div class="footer-column">
+
+
+            <h3>
+
+                VEDEN
+
+            </h3>
+
+
+            <a href="../index.html">
+
+                Home
+
+            </a>
+
+
+            <a href="products.html">
+
+                Marketplace
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+
+        <span>
+
+            © 2026 VEDEN. All rights reserved.
+
+        </span>
+
+
+        <span>
+
+            Built for a better way to shop.
+
+        </span>
+
+
+    </div>
+
+
+</footer>
+
+
+
+<!-- =====================================================
+     MAIN DATA / APP SCRIPT
+===================================================== -->
+
+<script src="../script.js"></script>
+
+<script src="../products-data.js"></script>
+
+
+
+<script>
+
+(function () {
+
+
+    "use strict";
+
+
+    /* =====================================================
+       PRODUCT ID
+    ===================================================== */
+
+    const params =
+
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    const productId =
+
+        params.get("id");
+
+
+    const container =
+
+        document.getElementById(
+            "productContainer"
+        );
+
+
+    const reviewsSection =
+
+        document.getElementById(
+            "reviewsSection"
+        );
+
+
+    const reviewsGrid =
+
+        document.getElementById(
+            "reviewsGrid"
+        );
+
+
+    const relatedSection =
+
+        document.getElementById(
+            "relatedSection"
+        );
+
+
+    const relatedProductsGrid =
+
+        document.getElementById(
+            "relatedProductsGrid"
+        );
+
+
+
+    /* =====================================================
+       SAFE TEXT
+    ===================================================== */
+
+    function escapeHTML(value) {
+
+        return String(
+            value ?? ""
+        )
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+            .replace(
+                /</g,
+                "&lt;"
+            )
+            .replace(
+                />/g,
+                "&gt;"
+            )
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+
+    }
+
+
+
+    /* =====================================================
+       SAFE NUMBER
+    ===================================================== */
+
+    function safeNumber(
+        value,
+        fallback = 0
+    ) {
+
+        const number =
+
+            Number(value);
+
+
+        return Number.isFinite(
+            number
+        )
+            ? number
+            : fallback;
+
+    }
+
+
+
+    /* =====================================================
+       FORMAT PRICE
+    ===================================================== */
+
+    function formatPrice(value) {
+
+        if (
+            window.VEDEN &&
+            typeof window.VEDEN.formatPrice ===
+                "function"
+        ) {
+
+            return window.VEDEN.formatPrice(
+                value
+            );
+
+        }
+
+
+        return "₹" +
+            safeNumber(
+                value
+            ).toLocaleString(
+                "en-IN"
+            );
+
+    }
+
+
+
+    /* =====================================================
+       RENDER STARS
+    ===================================================== */
+
+    function renderStars(rating) {
+
+        if (
+            window.VEDEN &&
+            typeof window.VEDEN.renderStars ===
+                "function"
+        ) {
+
+            return window.VEDEN.renderStars(
+                rating
+            );
+
+        }
+
+
+        const value = Math.max(
+            0,
+            Math.min(
+                5,
+                Math.round(
+                    safeNumber(
+                        rating
+                    )
+                )
+            )
+        );
+
+
+        return (
+            "★".repeat(value) +
+            "☆".repeat(5 - value)
+        );
+
+    }
+
+
+
+    /* =====================================================
+       SEARCH
+    ===================================================== */
+
+    const searchForm =
+
+        document.getElementById(
+            "productSearchForm"
+        );
+
+
+    const searchInput =
+
+        document.getElementById(
+            "productSearchInput"
+        );
+
+
+    if (
+        searchForm &&
+        searchInput
+    ) {
+
+        searchForm.addEventListener(
+            "submit",
+            function (event) {
+
+                event.preventDefault();
+
+
+                const query =
+
+                    searchInput.value.trim();
+
+
+                if (!query) {
+
+                    searchInput.focus();
+
+                    return;
+
+                }
+
+
+                if (
+                    window.VEDEN &&
+                    typeof window.VEDEN.openSearch ===
+                        "function"
+                ) {
+
+                    window.VEDEN.openSearch(
+                        query
+                    );
+
+                    return;
+
+                }
+
+
+                window.location.href =
+
+                    `products.html?search=${
+                        encodeURIComponent(
+                            query
+                        )
+                    }`;
+
+            }
+        );
+
+    }
+
+
+
+    /* =====================================================
+       GET EXISTING PRODUCT
+       -----------------------------------------------------
+       IMPORTANT:
+       script.js exposes getProductById().
+       There is NO getProduct() function.
+    ===================================================== */
+
+    let product = null;
+
+
+    if (
+        window.VEDEN &&
+        typeof window.VEDEN.getProductById ===
+            "function"
+    ) {
+
+        product =
+
+            window.VEDEN.getProductById(
+                productId
+            );
+
+    }
+
+
+    /*
+       Extra fallback using the actual products array.
+       This still does NOT create or modify products.
+    */
+
+    if (
+        !product &&
+        window.VEDEN &&
+        Array.isArray(
+            window.VEDEN.products
+        )
+    ) {
+
+        product =
+
+            window.VEDEN.products.find(
+                item =>
+                    item &&
+                    String(
+                        item.id
+                    ).trim() ===
+                    String(
+                        productId
+                    ).trim()
+            );
+
+    }
+
+
+
+    /* =====================================================
+       PRODUCT NOT FOUND
+    ===================================================== */
+
+    if (!product) {
+
+        container.innerHTML = `
+
+            <div class="product-error">
+
+                <h1>
+
+                    Product Not Found
+
+                </h1>
+
+
+                <p>
+
+                    This product may no longer be available.
+
+                </p>
+
+
+                <button
+                    class="back-button"
+                    type="button"
+                    id="browseProductsButton"
+                >
+
+                    Browse Products
+
+                </button>
+
+            </div>
+
+        `;
+
+
+        const browseButton =
+
+            document.getElementById(
+                "browseProductsButton"
+            );
+
+
+        if (browseButton) {
+
+            browseButton.addEventListener(
+                "click",
+                function () {
+
+                    window.location.href =
+                        "products.html";
+
+                }
+            );
+
+        }
+
+
+        return;
+
+    }
+
+
+
+    /* =====================================================
+       GET PRODUCT DETAIL DATA
+       -----------------------------------------------------
+       products-data.js generates the missing detail layer
+       from the SAME existing product.
+    ===================================================== */
+
+    let detailData = null;
+
+
+    if (
+        typeof window.getVedenProductDetails ===
+            "function"
+    ) {
+
+        detailData =
+
+            window.getVedenProductDetails(
+                product.id
+            );
+
+    }
+
+
+
+    /* =====================================================
+       DETAIL VALUES
+    ===================================================== */
+
+    const description =
+
+        detailData &&
+        detailData.description
+
+            ? detailData.description
+
+            : (
+                product.description ||
+                "Product information is available from the VEDEN catalog."
+            );
+
+
+    const productType =
+
+        detailData &&
+        detailData.productType
+
+            ? detailData.productType
+
+            : (
+                product.productType ||
+                "Product"
+            );
+
+
+    const specifications =
+
+        detailData &&
+        Array.isArray(
+            detailData.specifications
+        )
+
+            ? detailData.specifications
+
+            : (
+                Array.isArray(
+                    product.specifications
+                )
+                    ? product.specifications
+                    : []
+            );
+
+
+    const productReviews =
+
+        detailData &&
+        Array.isArray(
+            detailData.reviews
+        )
+
+            ? detailData.reviews
+
+            : (
+                Array.isArray(
+                    product.detailReviews
+                )
+
+                    ? product.detailReviews
+
+                    : (
+                        Array.isArray(
+                            product.reviews
+                        )
+                            ? product.reviews
+                            : []
+                    )
+            );
+
+
+
+    /* =====================================================
+       IMAGE PATH
+       -----------------------------------------------------
+       Existing catalog image is preserved.
+       Only prepend ../ when necessary because this page
+       lives inside /pages/.
+    ===================================================== */
+
+    function getProductImagePath(
+        image
+    ) {
+
+        const source =
+            String(
+                image ?? ""
+            ).trim();
+
+
+        if (!source) {
+
+            return "";
+
+        }
+
+
+        if (
+            source.startsWith(
+                "http://"
+            ) ||
+            source.startsWith(
+                "https://"
+            ) ||
+            source.startsWith(
+                "data:"
+            ) ||
+            source.startsWith(
+                "../"
+            ) ||
+            source.startsWith(
+                "/"
+            )
+        ) {
+
+            return source;
+
+        }
+
+
+        return "../" + source;
+
+    }
+
+
+    const imagePath =
+
+        getProductImagePath(
+            product.image
+        );
+
+
+
+    /* =====================================================
+       PRICE VALUES
+    ===================================================== */
+
+    const price =
+
+        safeNumber(
+            product.price
+        );
+
+
+    const oldPrice =
+
+        safeNumber(
+            product.oldPrice,
+            price
+        );
+
+
+    const savings =
+
+        Math.max(
+            0,
+            oldPrice - price
+        );
+
+
+    const rating =
+
+        safeNumber(
+            product.rating
+        );
+
+
+    const discount =
+
+        safeNumber(
+            product.discount
+        );
+
+
+
+    /* =====================================================
+       PAGE TITLE
+    ===================================================== */
+
+    document.title =
+
+        `${product.name} | VEDEN`;
+
+
+
+    /* =====================================================
+       RENDER PRODUCT
+    ===================================================== */
+
+    container.innerHTML = `
+
+        <div class="breadcrumb">
+
+            <a href="../index.html">
+
+                Home
+
+            </a>
+
+
+            <span>
+                /
+            </span>
+
+
+            <a
+                href="products.html?category=${encodeURIComponent(
+                    product.category || ""
+                )}"
+            >
+
+                ${escapeHTML(
+                    product.categoryName ||
+                    product.category ||
+                    "Products"
+                )}
+
+            </a>
+
+
+            <span>
+                /
+            </span>
+
+
+            <span>
+
+                ${escapeHTML(
+                    product.name
+                )}
+
+            </span>
+
+        </div>
+
+
+
+        <div class="product-detail">
+
+
+            <!-- =========================================
+                 PRODUCT IMAGE
+            ========================================== -->
+
+            <div class="product-gallery">
+
+
+                <div class="product-main-image">
+
+
+                    ${
+                        imagePath
+
+                            ? `
+
+                                <img
+                                    src="${escapeHTML(
+                                        imagePath
+                                    )}"
+                                    alt="${escapeHTML(
+                                        product.name
+                                    )}"
+                                >
+
+                            `
+
+                            : `
+
+                                <span
+                                    style="
+                                        color:#666;
+                                        font-size:12px;
+                                    "
+                                >
+                                    Image unavailable
+                                </span>
+
+                            `
+                    }
+
+
+                    ${
+                        discount > 0
+
+                            ? `
+
+                                <span
+                                    class="product-discount"
+                                >
+
+                                    ${discount}% OFF
+
+                                </span>
+
+                            `
+
+                            : ""
+
+                    }
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =========================================
+                 PRODUCT INFORMATION
+            ========================================== -->
+
+            <div class="product-info">
+
+
+                <span class="product-category">
+
+                    ${escapeHTML(
+                        product.categoryName ||
+                        product.category ||
+                        "Product"
+                    )}
+
+                </span>
+
+
+                <h1>
+
+                    ${escapeHTML(
+                        product.name
+                    )}
+
+                </h1>
+
+
+                <div class="product-brand-detail">
+
+                    By ${escapeHTML(
+                        product.brand ||
+                        "VEDEN"
+                    )}
+
+                </div>
+
+
+                <div class="product-rating-detail">
+
+
+                    <span class="rating-stars">
+
+                        ${renderStars(
+                            rating
+                        )}
+
+                    </span>
+
+
+                    <span class="rating-number">
+
+                        ${rating.toFixed(1)}
+
+                    </span>
+
+
+                    <span class="review-link">
+
+                        ${
+                            productReviews.length
+                        }
+
+                        customer reviews
+
+                    </span>
+
+
+                </div>
+
+
+                <div class="product-price-detail">
+
+
+                    <strong>
+
+                        ${formatPrice(
+                            price
+                        )}
+
+                    </strong>
+
+
+                    ${
+                        oldPrice > price
+
+                            ? `
+
+                                <del>
+
+                                    ${formatPrice(
+                                        oldPrice
+                                    )}
+
+                                </del>
+
+                            `
+
+                            : ""
+
+                    }
+
+
+                    ${
+                        savings > 0
+
+                            ? `
+
+                                <span
+                                    class="save-amount"
+                                >
+
+                                    Save ${formatPrice(
+                                        savings
+                                    )}
+
+                                </span>
+
+                            `
+
+                            : ""
+
+                    }
+
+
+                </div>
+
+
+                <p class="product-description">
+
+                    ${escapeHTML(
+                        description
+                    )}
+
+                </p>
+
+
+
+                <!-- =====================================
+                     BUY AREA
+                ====================================== -->
+
+                <div class="buy-area">
+
+
+                    <div class="quantity-control">
+
+
+                        <button
+                            class="quantity-button"
+                            id="decreaseQuantity"
+                            type="button"
+                            aria-label="Decrease quantity"
+                        >
+
+                            −
+
+                        </button>
+
+
+                        <span
+                            class="quantity-value"
+                            id="quantityValue"
+                        >
+
+                            1
+
+                        </span>
+
+
+                        <button
+                            class="quantity-button"
+                            id="increaseQuantity"
+                            type="button"
+                            aria-label="Increase quantity"
+                        >
+
+                            +
+
+                        </button>
+
+
+                    </div>
+
+
+                    <button
+                        class="detail-add-cart"
+                        id="detailAddCart"
+                        type="button"
+                    >
+
+                        Add to Cart
+
+                    </button>
+
+
+                </div>
+
+
+
+                <!-- =====================================
+                     FEATURES
+                ====================================== -->
+
+                <div class="product-features">
+
+
+                    <div class="feature-item">
+
+
+                        <strong>
+
+                            Fast Delivery
+
+                        </strong>
+
+
+                        <span>
+
+                            Quick delivery to your location
+
+                        </span>
+
+
+                    </div>
+
+
+                    <div class="feature-item">
+
+
+                        <strong>
+
+                            Secure Payment
+
+                        </strong>
+
+
+                        <span>
+
+                            Safe and secure checkout
+
+                        </span>
+
+
+                    </div>
+
+
+                    <div class="feature-item">
+
+
+                        <strong>
+
+                            Easy Returns
+
+                        </strong>
+
+
+                        <span>
+
+                            Simple return experience
+
+                        </span>
+
+
+                    </div>
+
+
+                    <div class="feature-item">
+
+
+                        <strong>
+
+                            Genuine Products
+
+                        </strong>
+
+
+                        <span>
+
+                            Quality products from trusted brands
+
+                        </span>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =====================================
+                     SPECIFICATIONS
+                ====================================== -->
+
+                ${
+                    specifications.length
+
+                        ? `
+
+                            <div
+                                class="product-specifications"
+                            >
+
+                                <h2>
+
+                                    Product Details
+
+                                </h2>
+
+
+                                <div>
+
+                                    ${specifications
+                                        .map(
+                                            specification => `
+
+                                                <div
+                                                    class="veden-spec-row"
+                                                >
+
+                                                    <span
+                                                        class="veden-spec-label"
+                                                    >
+
+                                                        ${escapeHTML(
+                                                            specification.label
+                                                        )}
+
+                                                    </span>
+
+
+                                                    <span
+                                                        class="veden-spec-value"
+                                                    >
+
+                                                        ${escapeHTML(
+                                                            specification.value
+                                                        )}
+
+                                                    </span>
+
+                                                </div>
+
+                                            `
+                                        )
+                                        .join("")
+                                    }
+
+                                </div>
+
+                            </div>
+
+                        `
+
+                        : ""
+
+                }
+
+
+            </div>
+
+
+        </div>
+
+    `;
+
+
+
+    /* =====================================================
+       QUANTITY
+    ===================================================== */
+
+    let quantity = 1;
+
+
+    const quantityValue =
+
+        document.getElementById(
+            "quantityValue"
+        );
+
+
+    const decreaseQuantity =
+
+        document.getElementById(
+            "decreaseQuantity"
+        );
+
+
+    const increaseQuantity =
+
+        document.getElementById(
+            "increaseQuantity"
+        );
+
+
+    if (
+        decreaseQuantity &&
+        quantityValue
+    ) {
+
+        decreaseQuantity.addEventListener(
+            "click",
+            function () {
+
+                if (
+                    quantity > 1
+                ) {
+
+                    quantity--;
+
+                    quantityValue.textContent =
+                        quantity;
+
+                }
+
+            }
+        );
+
+    }
+
+
+    if (
+        increaseQuantity &&
+        quantityValue
+    ) {
+
+        increaseQuantity.addEventListener(
+            "click",
+            function () {
+
+                if (
+                    quantity < 99
+                ) {
+
+                    quantity++;
+
+                    quantityValue.textContent =
+                        quantity;
+
+                }
+
+            }
+        );
+
+    }
+
+
+
+    /* =====================================================
+       ADD TO CART
+    ===================================================== */
+
+    const detailAddCart =
+
+        document.getElementById(
+            "detailAddCart"
+        );
+
+
+    if (detailAddCart) {
+
+        detailAddCart.addEventListener(
+            "click",
+            function () {
+
+                if (
+                    window.VEDEN &&
+                    typeof window.VEDEN.addToCart ===
+                        "function"
+                ) {
+
+                    window.VEDEN.addToCart(
+                        product.id,
+                        quantity
+                    );
+
+                }
+
+
+                detailAddCart.textContent =
+                    "Added to Cart";
+
+
+                detailAddCart.classList.add(
+                    "added"
+                );
+
+
+                if (
+                    window.VEDEN &&
+                    typeof window.VEDEN.updateCartBadges ===
+                        "function"
+                ) {
+
+                    window.VEDEN.updateCartBadges();
+
+                }
+
+
+                setTimeout(
+                    function () {
+
+                        detailAddCart.textContent =
+                            "Add to Cart";
+
+
+                        detailAddCart.classList.remove(
+                            "added"
+                        );
+
+                    },
+                    1500
+                );
+
+            }
+        );
+
+    }
+
+
+
+    /* =====================================================
+       REVIEWS
+       -----------------------------------------------------
+       THIS IS THE IMPORTANT FIX YOU ASKED FOR.
+    ===================================================== */
+
+    if (
+        productReviews.length
+    ) {
+
+
+        reviewsSection.style.display =
+            "block";
+
+
+        document
+            .getElementById(
+                "reviewScore"
+            )
+            .textContent =
+
+            rating.toFixed(
+                1
+            );
+
+
+        document
+            .getElementById(
+                "reviewSummaryStars"
+            )
+            .textContent =
+
+            renderStars(
+                rating
+            );
+
+
+        document
+            .getElementById(
+                "reviewSummaryText"
+            )
+            .textContent =
+
+            `${productReviews.length} verified reviews`;
+
+
+        reviewsGrid.innerHTML = "";
+
+
+        productReviews.forEach(
+            function (review) {
+
+
+                const reviewCard =
+
+                    document.createElement(
+                        "article"
+                    );
+
+
+                reviewCard.className =
+                    "review-card";
+
+
+                reviewCard.innerHTML = `
+
+                    <div class="review-top">
+
+                        <span class="review-user">
+
+                            ${escapeHTML(
+                                review.name ||
+                                "VEDEN Customer"
+                            )}
+
+                        </span>
+
+
+                        <span class="review-date">
+
+                            ${escapeHTML(
+                                review.date ||
+                                "Recently"
+                            )}
+
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="review-stars"
+                        aria-label="${safeNumber(
+                            review.rating,
+                            5
+                        )} out of 5 stars"
+                    >
+
+                        ${renderStars(
+                            safeNumber(
+                                review.rating,
+                                5
+                            )
+                        )}
+
+                    </div>
+
+
+                    <div class="review-title">
+
+                        ${escapeHTML(
+                            review.title ||
+                            "Good purchase"
+                        )}
+
+                    </div>
+
+
+                    <p class="review-text">
+
+                        ${escapeHTML(
+                            review.text ||
+                            "Good overall experience with this product."
+                        )}
+
+                    </p>
+
+
+                    ${
+                        review.verified !== false
+
+                            ? `
+
+                                <span
+                                    class="verified-review"
+                                >
+
+                                    ✓ Verified Purchase
+
+                                </span>
+
+                            `
+
+                            : ""
+
+                    }
+
+                `;
+
+
+                reviewsGrid.appendChild(
+                    reviewCard
+                );
+
+            }
+        );
+
+
+    } else {
+
+        reviewsSection.style.display =
+            "none";
+
+    }
+
+
+
+    /* =====================================================
+       RELATED PRODUCTS
+    ===================================================== */
+
+    if (
+        detailData &&
+        Array.isArray(
+            detailData.relatedProducts
+        ) &&
+        detailData.relatedProducts.length
+    ) {
+
+
+        const relatedProducts =
+
+            detailData.relatedProducts;
+
+
+        relatedSection.style.display =
+            "block";
+
+
+        relatedProductsGrid.innerHTML =
+            "";
+
+
+        relatedProducts.forEach(
+            function (relatedProduct) {
+
+
+                if (!relatedProduct) {
+
+                    return;
+
+                }
+
+
+                const card =
+
+                    document.createElement(
+                        "article"
+                    );
+
+
+                card.className =
+                    "veden-product-card";
+
+
+                card.dataset.productId =
+                    relatedProduct.id;
+
+
+                card.setAttribute(
+                    "role",
+                    "button"
+                );
+
+
+                card.setAttribute(
+                    "tabindex",
+                    "0"
+                );
+
+
+                const relatedImage =
+
+                    getProductImagePath(
+                        relatedProduct.image
+                    );
+
+
+                card.innerHTML = `
+
+                    <div
+                        class="veden-product-image"
+                    >
+
+                        ${
+                            relatedImage
+
+                                ? `
+
+                                    <img
+                                        src="${escapeHTML(
+                                            relatedImage
+                                        )}"
+                                        alt="${escapeHTML(
+                                            relatedProduct.name
+                                        )}"
+                                        loading="lazy"
+                                    >
+
+                                `
+
+                                : ""
+
+                        }
+
+                    </div>
+
+
+                    <div
+                        class="veden-product-content"
+                    >
+
+                        <div
+                            class="veden-product-brand"
+                        >
+
+                            ${escapeHTML(
+                                relatedProduct.brand ||
+                                ""
+                            )}
+
+                        </div>
+
+
+                        <h3
+                            class="veden-product-name"
+                        >
+
+                            ${escapeHTML(
+                                relatedProduct.name ||
+                                "Product"
+                            )}
+
+                        </h3>
+
+
+                        <div
+                            class="veden-product-rating"
+                        >
+
+                            ${renderStars(
+                                safeNumber(
+                                    relatedProduct.rating
+                                )
+                            )}
+
+                        </div>
+
+
+                        <strong>
+
+                            ${formatPrice(
+                                relatedProduct.price
+                            )}
+
+                        </strong>
+
+                    </div>
+
+                `;
+
+
+                function openRelatedProduct() {
+
+                    if (
+                        window.VEDEN &&
+                        typeof window.VEDEN.getProductById ===
+                            "function"
+                    ) {
+
+                        const existingProduct =
+
+                            window.VEDEN.getProductById(
+                                relatedProduct.id
+                            );
+
+
+                        if (
+                            existingProduct &&
+                            typeof window.VEDEN.openProduct ===
+                                "function"
+                        ) {
+
+                            window.VEDEN.openProduct(
+                                existingProduct.id
+                            );
+
+                            return;
+
+                        }
+
+                    }
+
+
+                    window.location.href =
+
+                        `product.html?id=${encodeURIComponent(
+                            relatedProduct.id
+                        )}`;
+
+                }
+
+
+                card.addEventListener(
+                    "click",
+                    function () {
+
+                        openRelatedProduct();
+
+                    }
+                );
+
+
+                card.addEventListener(
+                    "keydown",
+                    function (event) {
+
+                        if (
+                            event.key === "Enter" ||
+                            event.key === " "
+                        ) {
+
+                            event.preventDefault();
+
+                            openRelatedProduct();
+
+                        }
+
+                    }
+                );
+
+
+                relatedProductsGrid.appendChild(
+                    card
+                );
+
+            }
+        );
+
+
+    } else {
+
+        relatedSection.style.display =
+            "none";
+
+    }
+
+
+
+    /* =====================================================
+       CART BADGE
+    ===================================================== */
+
+    if (
+        window.VEDEN &&
+        typeof window.VEDEN.updateCartBadges ===
+            "function"
+    ) {
+
+        window.VEDEN.updateCartBadges();
+
+    }
+
+
+})();
+
+</script>
+
+
+</body>
+
+</html>
